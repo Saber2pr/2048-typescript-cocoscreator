@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 13:31:42 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-01 20:54:18
+ * @Last Modified time: 2018-11-01 21:55:55
  */
 export default class TouchFront {
   private node: cc.Node

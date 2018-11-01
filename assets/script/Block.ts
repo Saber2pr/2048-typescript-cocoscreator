@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 20:07:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-01 21:52:54
+ * @Last Modified time: 2018-11-01 22:00:41
  */
 import IBlock from './IBlock'
 
@@ -12,19 +12,19 @@ export default class Block implements IBlock {
     this.sprite = sprite
   }
 
-  goLeft(this: Block): void {
+  public goLeft = (): void => {
     this.sprite.node.runAction(cc.moveBy(1, cc.v2(-100, 0)))
   }
 
-  goRight(this: Block): void {
+  public goRight = (): void => {
     this.sprite.node.runAction(cc.moveBy(1, cc.v2(100, 0)))
   }
 
-  goUp(this: Block): void {
+  public goUp = (): void => {
     this.sprite.node.runAction(cc.moveBy(1, cc.v2(0, 100)))
   }
 
-  goDown(this: Block): void {
+  public goDown = (): void => {
     this.sprite.node.runAction(cc.moveBy(1, cc.v2(0, -100)))
   }
 }

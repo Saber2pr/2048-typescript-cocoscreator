@@ -11,6 +11,13 @@ export default class TouchBlock {
   }
 
   public load(): void {
-    this.touchFront.submit(() => this.block.goLeft()).listen()
+    this.touchFront
+      .submit(
+        this.block.goLeft,
+        this.block.goRight,
+        this.block.goUp,
+        this.block.goDown
+      )
+      .listen()
   }
 }
