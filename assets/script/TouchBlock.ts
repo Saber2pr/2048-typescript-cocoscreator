@@ -1,8 +1,6 @@
-const { ccclass, property } = cc._decorator
 import Block from './IBlock'
 import TouchFront from './ITouchFront'
 
-@ccclass
 export default class TouchBlock {
   private block: Block
   private touchFront: TouchFront
