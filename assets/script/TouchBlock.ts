@@ -1,23 +1,15 @@
-import Block from './IBlock'
 import TouchFront from './ITouchFront'
+import Model from './Model'
 
 export default class TouchBlock {
-  private block: Block
   private touchFront: TouchFront
-
-  constructor(block: Block, touchFront: TouchFront) {
-    this.block = block
+  constructor(touchFront: TouchFront) {
     this.touchFront = touchFront
   }
 
-  public load(): void {
-    this.touchFront
-      .submit(
-        this.block.goLeft,
-        this.block.goRight,
-        this.block.goUp,
-        this.block.goDown
-      )
-      .listen()
+  public load = (): void => {
+    this.touchFront.submit(this.foo).listen()
   }
+
+  foo() {}
 }
