@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 12:51:23 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 21:34:36
+ * @Last Modified time: 2018-11-02 22:48:49
  */
 const { ccclass, property } = cc._decorator
 import PhysicsManager from './PhysicsManager'
@@ -10,8 +10,7 @@ import TouchFront from './TouchFront'
 import TouchBlock from './TouchBlock'
 import Block from './Block'
 import Model from './Model'
-import MathVec, { transformArray } from './MathVec'
-import Data from './Data'
+import MathVec from './MathVec'
 
 @ccclass
 export default class PlayScene extends cc.Component {
@@ -38,14 +37,9 @@ export default class PlayScene extends cc.Component {
 
     // controller
     new TouchBlock(
-      new TouchFront(this.background.node, 100),
+      new TouchFront(this.background.node),
       new Block(nodePool, 50)
     ).load()
-
-    Data.getInstance().init()
-    let map = Data.getInstance().map
-    cc.log(map, Data.getInstance().merge('left', map[0]))
-    cc.log('trans', transformArray<number>(map))
   }
 
   addBlock(num: number, array: cc.Node[]): void {

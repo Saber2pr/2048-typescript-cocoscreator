@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 13:31:42 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 13:05:22
+ * @Last Modified time: 2018-11-02 22:48:25
  */
 import ITouchFront from './ITouchFront'
 /**
@@ -14,15 +14,26 @@ import ITouchFront from './ITouchFront'
 export default class TouchFront implements ITouchFront {
   private node: cc.Node
   private offset: number
+  private delta: number
+  private _lock: number
 
   private callbackLeft: Function
   private callbackRight: Function
   private callbackUp: Function
   private callbackDown: Function
 
-  constructor(node: cc.Node, offset: number) {
+  /**
+   *Creates an instance of TouchFront.
+   * @param {cc.Node} node 监听节点
+   * @param {number} [offset=100] 触摸偏移 ? 100
+   * @param {number} [delta=200] 灵敏度 ? 200
+   * @memberof TouchFront
+   */
+  constructor(node: cc.Node, offset: number = 100, delta: number = 200) {
     this.node = node
     this.offset = offset
+    this._lock = 0
+    this.delta = delta
   }
 
   public submit = (
@@ -44,9 +55,21 @@ export default class TouchFront implements ITouchFront {
       cc.Node.EventType.TOUCH_START,
       touch => (originPos = touch.getLocation())
     )
-    this.node.on(cc.Node.EventType.TOUCH_MOVE, touch =>
-      this.testPos(originPos, touch.getLocation())
-    )
+    this.node.on(cc.Node.EventType.TOUCH_MOVE, touch => {
+      this._lock++
+    })
+    this.node.on(cc.Node.EventType.TOUCH_END, touch => {
+      this._lock < this.delta
+        ? this.testPos(originPos, touch.getLocation())
+        : null
+      this._lock = 0
+    })
+    this.node.on(cc.Node.EventType.TOUCH_CANCEL, touch => {
+      this._lock < this.delta
+        ? this.testPos(originPos, touch.getLocation())
+        : null
+      this._lock = 0
+    })
   }
 
   private testPos = (originPos: cc.Vec2, touchPos: cc.Vec2): void => {
