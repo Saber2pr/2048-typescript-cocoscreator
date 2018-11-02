@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 12:51:23 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 23:54:54
+ * @Last Modified time: 2018-11-02 23:57:38
  */
 const { ccclass, property } = cc._decorator
 import PhysicsManager from './PhysicsManager'
@@ -45,6 +45,7 @@ export default class PlayScene extends cc.Component {
         end: 150
       }
     })
+    blocker.addBlock(3, nodePool)
     new TouchBlock(new TouchFront(this.background.node), blocker).load()
   }
 

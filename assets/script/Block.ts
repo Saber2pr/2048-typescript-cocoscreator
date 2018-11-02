@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 20:07:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 23:48:39
+ * @Last Modified time: 2018-11-02 23:59:53
  */
 import IBlock from './IBlock'
 import Model from './Model'
@@ -42,6 +42,7 @@ export default class Block implements IBlock {
         block.y >= this.edge.height.start &&
         block.y <= this.edge.height.end
       ) {
+        // 改一下pos call(, pos)
         callback(block)
       }
     }
@@ -57,7 +58,7 @@ export default class Block implements IBlock {
     value === 0 ? Model.getInstance().BlockPool.put(node) : null
   }
 
-  private addBlock(num: number, array: cc.Node[]): void {
+  public addBlock(num: number, array: cc.Node[]): void {
     let rand = new MathVec(-150, 100, 4)
     let flag: number = 0
     let handle = setInterval(() => {
