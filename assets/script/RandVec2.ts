@@ -1,3 +1,9 @@
+/*
+ * @Author: AK-12 
+ * @Date: 2018-11-02 17:06:29 
+ * @Last Modified by:   AK-12 
+ * @Last Modified time: 2018-11-02 17:06:29 
+ */
 import IRandVec2 from './IRandVec2'
 
 export default class RandVec2 implements IRandVec2 {

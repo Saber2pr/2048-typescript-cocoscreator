@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 12:51:23 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 16:56:23
+ * @Last Modified time: 2018-11-02 17:44:06
  */
 const { ccclass, property } = cc._decorator
 import PhysicsManager from './PhysicsManager'
@@ -11,6 +11,7 @@ import TouchBlock from './TouchBlock'
 import Block from './Block'
 import Model from './Model'
 import RandVec2 from './RandVec2'
+import Data from './Data'
 
 @ccclass
 export default class PlayScene extends cc.Component {
@@ -40,6 +41,10 @@ export default class PlayScene extends cc.Component {
       new TouchFront(this.background.node, 100),
       new Block(nodePool, 50)
     ).load()
+
+    Data.getInstance().init()
+    let map = Data.getInstance().map
+    // cc.log(Data.getInstance().getData(map[0]))
   }
 
   addBlock(num: number, array: cc.Node[]): void {
