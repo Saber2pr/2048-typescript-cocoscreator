@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 22:50:11
+ * @Last Modified time: 2018-11-02 23:01:53
  */
 import IData from './IData'
 import { transformArray } from './MathVec'
@@ -36,36 +36,41 @@ export default class Data implements IData {
     }
   }
 
-  public merge(method: string, arr: number[][] = this.map): number[] {
-    let result
+  public merge(method: string, arr: number[][] = this.map): void {
     switch (method) {
       case 'left':
-        this.mergeSuper(arr, this.mergeLeft)
+        this.map = this.mergeSuper(arr, this.mergeLeft)
         this.logInfor += 'mergeLeft--'
         break
       case 'right':
-        this.mergeSuper(arr, this.mergeRight)
+        this.map = this.mergeSuper(arr, this.mergeRight)
         this.logInfor += 'mergeRight--'
         break
       case 'up':
-        this.mergeSuper(transformArray(arr), this.mergeLeft)
+        this.map = this.mergeSuper(transformArray(arr), this.mergeLeft)
+        this.map = transformArray(this.map)
         this.logInfor += 'mergeUp--'
         break
       case 'down':
-        this.mergeSuper(transformArray(arr), this.mergeRight)
+        this.map = this.mergeSuper(transformArray(arr), this.mergeRight)
+        this.map = transformArray(this.map)
         this.logInfor += 'mergeDown--'
         break
       default:
         throw new Error('Data merge method error')
         break
     }
-    return result
   }
 
-  private mergeSuper = (arr: number[][], callback: Function): void => {
+  private mergeSuper = (
+    arr: number[][],
+    callback: (arr: number[]) => number[]
+  ): number[][] => {
+    let newArray: Array<Array<number>> = new Array<Array<number>>()
     for (var raw of arr) {
-      callback(raw)
+      newArray.push(callback(raw))
     }
+    return newArray
   }
 
   private mergeLeft = (arr: number[]): number[] => {
@@ -117,6 +122,11 @@ export default class Data implements IData {
     }
     return arr
   }
+  /**
+   *输出调试信息
+   *
+   * @memberof Data
+   */
   public log(): void {
     console.log(this.map, this.logInfor)
   }
