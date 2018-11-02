@@ -1,19 +1,19 @@
 /*
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:29 
- * @Last Modified by:   AK-12 
- * @Last Modified time: 2018-11-02 17:06:29 
+ * @Last Modified by: AK-12
+ * @Last Modified time: 2018-11-02 21:45:04
  */
-import IRandVec2 from './IRandVec2'
+import IMathVec from './IMathVec'
 
-export default class RandVec2 implements IRandVec2 {
+export default class MathVec implements IMathVec {
   /**
-   *Creates an instance of RandVec2.
+   *Creates an instance of MathVec.
    * @param {number} start 初值
    * @param {number} step 步长
    * @param {number} num 最大次数
-   * @example let rand = new RandVec2(-150, 100, 4)
-   * @memberof RandVec2
+   * @example let rand = new MathVec(-150, 100, 4)
+   * @memberof MathVec
    */
   constructor(start: number, step: number, num: number) {
     this.start = start
@@ -39,7 +39,7 @@ export default class RandVec2 implements IRandVec2 {
    * @param {cc.Vec2} v2
    * @returns {cc.Vec2}
    * @example computed(cc.v2(0, 0), '+', cc.v2(1, 1))
-   * @memberof RandVec2
+   * @memberof MathVec
    */
   public computed(v1: cc.Vec2, method: string, v2: cc.Vec2): cc.Vec2 {
     let result
@@ -62,4 +62,21 @@ export default class RandVec2 implements IRandVec2 {
     }
     return result
   }
+}
+
+export let transformArray: <Type>(
+  arr: Type[][]
+) => Type[][] = function transformArray<Type>(arr: Type[][]): Type[][] {
+  let newArray: Array<Array<Type>> = new Array<Array<Type>>()
+  let raws = arr.length
+  let raw = 0
+  for (; raw < raws; raw++) {
+    newArray.push([])
+    let col = 0
+    let cols = arr[raw].length
+    for (; col < cols; col++) {
+      newArray[raw][col] = arr[col][raw]
+    }
+  }
+  return newArray
 }

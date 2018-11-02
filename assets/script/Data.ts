@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 20:31:56
+ * @Last Modified time: 2018-11-02 20:45:13
  */
 import IData from './IData'
 
@@ -27,7 +27,7 @@ export default class Data implements IData {
     }
   }
 
-  public merge(arr: number[], method: string): number[] {
+  public merge(method: string, arr: number[]): number[] {
     return method === 'left' ? this.mergeLeft(arr) : this.mergeRight(arr)
   }
 

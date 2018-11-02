@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 12:51:23 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 20:28:31
+ * @Last Modified time: 2018-11-02 21:34:36
  */
 const { ccclass, property } = cc._decorator
 import PhysicsManager from './PhysicsManager'
@@ -10,7 +10,7 @@ import TouchFront from './TouchFront'
 import TouchBlock from './TouchBlock'
 import Block from './Block'
 import Model from './Model'
-import RandVec2 from './RandVec2'
+import MathVec, { transformArray } from './MathVec'
 import Data from './Data'
 
 @ccclass
@@ -44,11 +44,12 @@ export default class PlayScene extends cc.Component {
 
     Data.getInstance().init()
     let map = Data.getInstance().map
-    cc.log(map, Data.getInstance().merge(map[0], 'left'))
+    cc.log(map, Data.getInstance().merge('left', map[0]))
+    cc.log('trans', transformArray<number>(map))
   }
 
   addBlock(num: number, array: cc.Node[]): void {
-    let rand = new RandVec2(-150, 100, 4)
+    let rand = new MathVec(-150, 100, 4)
     this.schedule(
       () => {
         let block = Model.getInstance().BlockPool.get()
