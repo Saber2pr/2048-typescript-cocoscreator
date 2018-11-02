@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 12:51:23 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 17:44:06
+ * @Last Modified time: 2018-11-02 20:28:31
  */
 const { ccclass, property } = cc._decorator
 import PhysicsManager from './PhysicsManager'
@@ -44,7 +44,7 @@ export default class PlayScene extends cc.Component {
 
     Data.getInstance().init()
     let map = Data.getInstance().map
-    // cc.log(Data.getInstance().getData(map[0]))
+    cc.log(map, Data.getInstance().merge(map[0], 'left'))
   }
 
   addBlock(num: number, array: cc.Node[]): void {
