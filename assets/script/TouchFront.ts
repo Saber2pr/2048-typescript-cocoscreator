@@ -2,9 +2,16 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 13:31:42 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-01 22:58:48
+ * @Last Modified time: 2018-11-02 13:05:22
  */
-export default class TouchFront {
+import ITouchFront from './ITouchFront'
+/**
+ *触摸方向执行对应回调
+ *
+ * @export
+ * @class TouchFront
+ */
+export default class TouchFront implements ITouchFront {
   private node: cc.Node
   private offset: number
 

@@ -1,3 +1,22 @@
+/*
+ * @Author: AK-12 
+ * @Date: 2018-11-02 13:06:11 
+ * @Last Modified by:   AK-12 
+ * @Last Modified time: 2018-11-02 13:06:11 
+ */
+/**
+ * 获取单例
+ * @function getInstance
+ * ***
+ * 加载prefab缓存
+ * @function initPool
+ * ***
+ * 获取cc.NodePool对象
+ * @param BlockPool cc.NodePool
+ * ***
+ * @export
+ * @class Model
+ */
 export default class Model {
   private constructor() {
     this._BlockPool = new cc.NodePool()
@@ -16,8 +35,5 @@ export default class Model {
   }
   get BlockPool(): cc.NodePool {
     return this._BlockPool
-  }
-  public clear(): void {
-    this._BlockPool.clear()
   }
 }

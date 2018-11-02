@@ -1,15 +1,33 @@
+/*
+ * @Author: AK-12 
+ * @Date: 2018-11-02 13:06:00 
+ * @Last Modified by: AK-12
+ * @Last Modified time: 2018-11-02 13:18:13
+ */
 import TouchFront from './ITouchFront'
-import Model from './Model'
-
+import Block from './IBlock'
+/**
+ *建立触摸与block之间关系
+ *
+ * @export
+ * @class TouchBlock
+ */
 export default class TouchBlock {
   private touchFront: TouchFront
-  constructor(touchFront: TouchFront) {
+  private block: Block
+  constructor(touchFront: TouchFront, block: Block) {
     this.touchFront = touchFront
+    this.block = block
   }
 
   public load = (): void => {
-    this.touchFront.submit(this.foo).listen()
+    this.touchFront
+      .submit(
+        this.block.goLeft,
+        this.block.goRight,
+        this.block.goUp,
+        this.block.goDown
+      )
+      .listen()
   }
-
-  foo() {}
 }
