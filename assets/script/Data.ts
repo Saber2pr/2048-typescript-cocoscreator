@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 23:01:53
+ * @Last Modified time: 2018-11-02 23:14:12
  */
 import IData from './IData'
 import { transformArray } from './MathVec'
@@ -36,7 +36,7 @@ export default class Data implements IData {
     }
   }
 
-  public merge(method: string, arr: number[][] = this.map): void {
+  public merge(method: string, arr: number[][] = this.map): number[][] {
     switch (method) {
       case 'left':
         this.map = this.mergeSuper(arr, this.mergeLeft)
@@ -60,6 +60,8 @@ export default class Data implements IData {
         throw new Error('Data merge method error')
         break
     }
+    this.logInfor = this.logInfor.length > 50 ? '' : this.logInfor
+    return this.map
   }
 
   private mergeSuper = (
