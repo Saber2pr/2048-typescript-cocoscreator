@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 18:45:24
+ * @Last Modified time: 2018-11-03 19:07:57
  */
 import {
   transformArray,
@@ -57,11 +57,23 @@ export default class Data {
       })
     }, 2)
   }
-
+  /**
+   *获取当前矩阵
+   *
+   * @readonly
+   * @type {number[][]}
+   * @memberof Data
+   */
   get data(): number[][] {
     return this.map
   }
-
+  /**
+   *获取分数
+   *
+   * @readonly
+   * @type {number}
+   * @memberof Data
+   */
   get score(): number {
     return this.updateTimes
   }
@@ -99,7 +111,12 @@ export default class Data {
     }
     this.logInfor = this.logInfor.length > 50 ? '' : this.logInfor
   }
-
+  /**
+   *反转回调处理矩阵
+   *
+   * @private
+   * @memberof Data
+   */
   private mergeSuper = (
     arr: number[][],
     callback: (arr: number[]) => number[]
@@ -139,7 +156,12 @@ export default class Data {
     }
     return hasNext
   }
-
+  /**
+   *向左合并
+   *
+   * @private
+   * @memberof Data
+   */
   private mergeLeft = (arr: number[]): number[] => {
     let i, nextI, m
     let len = arr.length
@@ -164,7 +186,12 @@ export default class Data {
     }
     return arr
   }
-
+  /**
+   *向右合并
+   *
+   * @private
+   * @memberof Data
+   */
   private mergeRight = (arr: number[]): number[] => {
     let i, nextI, m
     let len = arr.length

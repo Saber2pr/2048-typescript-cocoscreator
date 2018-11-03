@@ -2,16 +2,23 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 19:01:47
+ * @Last Modified time: 2018-11-03 19:18:14
  */
 import IMathVec, { Point } from './IMathVec'
 
+/**
+ *获取随机直角坐标点
+ *
+ * @export
+ * @class MathVec
+ * @implements {IMathVec}
+ */
 export default class MathVec implements IMathVec {
   /**
    *Creates an instance of MathVec.
    * @param {number} start 初值
    * @param {number} step 步长
-   * @param {number} num 最大次数
+   * @param {number} num 最大阶数
    * @example let rand = new MathVec(-150, 100, 4)
    * @memberof MathVec
    */

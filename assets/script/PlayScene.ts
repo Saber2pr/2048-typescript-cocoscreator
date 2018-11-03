@@ -2,10 +2,9 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 12:51:23 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 18:23:35
+ * @Last Modified time: 2018-11-03 19:23:13
  */
 const { ccclass, property } = cc._decorator
-import PhysicsManager from './PhysicsManager'
 import TouchFront from './TouchFront'
 import TouchBlock from './TouchBlock'
 import Layout from './Layout'
@@ -22,10 +21,6 @@ export default class PlayScene extends cc.Component {
   blockPrefab: cc.Prefab = null
 
   onLoad() {
-    // init Physics
-    PhysicsManager.getInstance()
-      .enabled(true)
-      .gravity(cc.v2(0, -500))
     // init prefab cache
     Model.getInstance().initPool(this.blockPrefab, 16)
     //init Data
@@ -34,7 +29,7 @@ export default class PlayScene extends cc.Component {
 
   start() {
     // controller
-    let layout = new Layout(this.background.node, 100)
+    let layout = new Layout(this.background.node)
     layout
       .initEdge({
         width: {

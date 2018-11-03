@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 13:06:00 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 19:00:51
+ * @Last Modified time: 2018-11-03 19:24:10
  */
 import TouchFront from './ITouchFront'
 import Layout from './ILayout'
@@ -23,7 +23,11 @@ export default class TouchBlock {
     this.layout = layout
     this._count = 0
   }
-
+  /**
+   *加载触摸事件
+   *
+   * @memberof TouchBlock
+   */
   public load = (): void => {
     // 触摸手势回调
     this.touchFront.submit(this.left, this.right, this.up, this.down).listen()
@@ -32,28 +36,24 @@ export default class TouchBlock {
     Data.getInstance().merge('left')
     this.result = Data.getInstance().addRand()
     this.testResult()
-    // this.layout.goLeft()
     this.layout.draw()
   }
   private right = (): void => {
     Data.getInstance().merge('right')
     this.result = Data.getInstance().addRand()
     this.testResult()
-    // this.layout.goRight()
     this.layout.draw()
   }
   private up = (): void => {
     Data.getInstance().merge('up')
     this.result = Data.getInstance().addRand()
     this.testResult()
-    // this.layout.goUp()
     this.layout.draw()
   }
   private down = (): void => {
     Data.getInstance().merge('down')
     this.result = Data.getInstance().addRand()
     this.testResult()
-    // this.layout.goDown()
     this.layout.draw()
   }
   /**

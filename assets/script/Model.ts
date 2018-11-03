@@ -2,9 +2,8 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 13:06:11 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 17:28:10
+ * @Last Modified time: 2018-11-03 19:22:40
  */
-import { Point } from './IMathVec'
 /**
  * 获取单例
  * @function getInstance
@@ -22,7 +21,6 @@ export default class Model {
   private constructor() {
     this._BlockPool = new cc.NodePool()
     this._nodeList = new Array<cc.Node>()
-    this._recordList = new Array<Point>()
   }
   static instance: Model
   static getInstance(): Model {
@@ -32,7 +30,13 @@ export default class Model {
   private _BlockPool: cc.NodePool
   private _prafab: cc.Prefab
   private _nodeList: cc.Node[]
-  private _recordList: Array<Point>
+  /**
+   *加载prefab缓存
+   *
+   * @param {cc.Prefab} prefab
+   * @param {number} size
+   * @memberof Model
+   */
   public initPool(prefab: cc.Prefab, size: number) {
     for (let i = 0; i < size; ++i) {
       let block = cc.instantiate(prefab)
@@ -40,16 +44,22 @@ export default class Model {
     }
     this._prafab = prefab
   }
+  /**
+   *获取节点列表
+   *
+   * @readonly
+   * @type {cc.Node[]}
+   * @memberof Model
+   */
   get NodeList(): cc.Node[] {
     return this._nodeList
   }
-  get PointList(): Array<Point> {
-    this._recordList = []
-    return this._recordList
-  }
-  public putBlock(node: cc.Node): void {
-    this._BlockPool.put(node)
-  }
+  /**
+   *从缓存获取block节点
+   *
+   * @returns {cc.Node}
+   * @memberof Model
+   */
   public getBlock(): cc.Node {
     let block = null
     if (this._BlockPool.size() > 0) {
@@ -59,19 +69,39 @@ export default class Model {
     }
     return block
   }
-  public saveNode(node: cc.Node, vec2: cc.Vec2): void {
+  /**
+   *保存节点引用
+   *
+   * @param {cc.Node} node
+   * @memberof Model
+   */
+  public saveNode(node: cc.Node): void {
     this._nodeList.push(node)
-    this._recordList.push(vec2)
   }
+  /**
+   *回收全部节点到缓存
+   *
+   * @memberof Model
+   */
   public clearNodeList(): void {
     for (var node of this._nodeList) {
       this._BlockPool.put(node)
       this._nodeList = []
     }
   }
+  /**
+   *清空缓存
+   *
+   * @memberof Model
+   */
   public ClearPool(): void {
     this._BlockPool.clear()
   }
+  /**
+   *输出调试信息
+   *
+   * @memberof Model
+   */
   public log(): void {
     console.log(this._BlockPool.size())
   }
