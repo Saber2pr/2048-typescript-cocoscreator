@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 13:13:02
+ * @Last Modified time: 2018-11-03 13:29:49
  */
 import {
   transformArray,
@@ -102,12 +102,14 @@ export default class Data {
   /**
    *随机位置添加元素
    *
+   * @returns {boolean} 返回true, 若没有空位则返回false
    * @memberof Data
    */
-  public addRand(): void {
+  public addRand(): boolean {
+    let result = false
     visitArray(this.map, (raw, col) => {
-      randFunc(() => {
-        if (this.map[raw][col] === 0) {
+      if (this.map[raw][col] === 0) {
+        randFunc(() => {
           alterArray(
             this.map,
             {
@@ -116,9 +118,11 @@ export default class Data {
             },
             2
           )
-        }
-      })
+        })
+        result = true
+      }
     })
+    return result
   }
 
   private mergeLeft = (arr: number[]): number[] => {

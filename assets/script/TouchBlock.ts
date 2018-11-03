@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 13:06:00 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 12:33:12
+ * @Last Modified time: 2018-11-03 13:50:22
  */
 import TouchFront from './ITouchFront'
 import Layout from './ILayout'
@@ -16,9 +16,12 @@ import Data from './Data'
 export default class TouchBlock {
   private touchFront: TouchFront
   private layout: Layout
+  private result: boolean
+  private _count: number
   constructor(touchFront: TouchFront, layout: Layout) {
     this.touchFront = touchFront
     this.layout = layout
+    this._count = 0
   }
 
   public load = (): void => {
@@ -27,30 +30,71 @@ export default class TouchBlock {
   }
   private left = (): void => {
     Data.getInstance().merge('left')
-    Data.getInstance().addRand()
+    this.result = Data.getInstance().addRand()
+    this.log()
+    this.testResult()
     Data.getInstance().log()
     // this.layout.goLeft()
     this.layout.draw()
   }
   private right = (): void => {
     Data.getInstance().merge('right')
-    Data.getInstance().addRand()
+    this.result = Data.getInstance().addRand()
+    this.log()
+    this.testResult()
     Data.getInstance().log()
     // this.layout.goRight()
     this.layout.draw()
   }
   private up = (): void => {
     Data.getInstance().merge('up')
-    Data.getInstance().addRand()
+    this.result = Data.getInstance().addRand()
+    this.log()
+    this.testResult()
     Data.getInstance().log()
     // this.layout.goUp()
     this.layout.draw()
   }
   private down = (): void => {
     Data.getInstance().merge('down')
-    Data.getInstance().addRand()
+    this.result = Data.getInstance().addRand()
+    this.log()
+    this.testResult()
     Data.getInstance().log()
     // this.layout.goDown()
     this.layout.draw()
+  }
+  /**
+   *四个方向都没合并
+   *
+   * @private
+   * @memberof TouchBlock
+   */
+  private testResult = (): void => {
+    this._count++
+    if (this._count > 4) {
+      if (this.result === false) {
+        this.gameOver()
+      } else {
+        this._count = 0
+      }
+    }
+  }
+  /**
+   *游戏失败
+   *
+   * @private
+   * @memberof TouchBlock
+   */
+  private gameOver = (): void => {
+    cc.log('over!!')
+  }
+  /**
+   *输出调试信息
+   *
+   * @memberof TouchBlock
+   */
+  public log = (): void => {
+    cc.log('result', this.result, 'count', this._count)
   }
 }

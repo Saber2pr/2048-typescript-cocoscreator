@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 13:11:37
+ * @Last Modified time: 2018-11-03 13:22:13
  */
 import IMathVec from './IMathVec'
 
@@ -138,9 +138,9 @@ export function toInt(value) {
  *
  * @export
  * @param {Function} callback
- * @param {number} [value=2]
+ * @param {number} [value=1.5] 值越大执行回调概率越大
  */
-export function randFunc(callback: Function, value: number = 2): void {
+export function randFunc(callback: Function, value: number = 1.5): void {
   let rand = Boolean(toInt(Math.random() * value))
   if (rand) {
     callback(rand)
