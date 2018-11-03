@@ -1,7 +1,4 @@
-export default interface MathVec {
-  randPos(): cc.Vec2
-  randVaule(): number
-}
+export default interface MathVec {}
 
 export interface Point {
   x: number

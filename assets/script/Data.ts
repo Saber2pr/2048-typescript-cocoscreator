@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 19:07:57
+ * @Last Modified time: 2018-11-03 20:15:59
  */
 import {
   transformArray,
@@ -20,11 +20,7 @@ import {
  * @class Data
  */
 export default class Data {
-  private constructor() {
-    this.map = new Array<Array<number>>()
-    this.logInfor = ''
-    this.updateTimes = 0
-  }
+  private constructor() {}
   static instance: Data
   static getInstance(): Data {
     this.instance = !!this.instance ? this.instance : new Data()
@@ -40,6 +36,9 @@ export default class Data {
    * @memberof Data
    */
   public init(size: number = 4): void {
+    this.map = new Array<Array<number>>()
+    this.logInfor = ''
+    this.updateTimes = 0
     let raw: number = 0
     for (; raw < size; raw++) {
       this.map.push([0, 0, 0, 0])
@@ -141,7 +140,6 @@ export default class Data {
         points.push({ x: raw, y: col })
         hasNext = true
       }
-      this.updateTimes += 2
     })
     if (hasNext) {
       let index = toInt(Math.random() * points.length)
@@ -180,6 +178,7 @@ export default class Data {
           i -= 1
         } else if (arr[i] === arr[nextI]) {
           arr[i] = arr[i] * 2
+          this.updateTimes += arr[i]
           arr[nextI] = 0
         }
       }
@@ -210,6 +209,7 @@ export default class Data {
           i -= 1
         } else if (arr[i] === arr[nextI]) {
           arr[i] = arr[i] * 2
+          this.updateTimes += arr[i]
           arr[nextI] = 0
         }
       }

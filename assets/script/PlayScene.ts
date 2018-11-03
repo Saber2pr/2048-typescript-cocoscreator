@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 12:51:23 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 19:23:13
+ * @Last Modified time: 2018-11-03 20:05:45
  */
 const { ccclass, property } = cc._decorator
 import TouchFront from './TouchFront'
@@ -19,6 +19,8 @@ export default class PlayScene extends cc.Component {
   background: cc.Sprite = null
   @property(cc.Prefab)
   blockPrefab: cc.Prefab = null
+  @property(cc.Label)
+  score: cc.Label = null
 
   onLoad() {
     // init prefab cache
@@ -42,8 +44,14 @@ export default class PlayScene extends cc.Component {
         }
       })
       .draw()
-    new TouchBlock(new TouchFront(this.background.node), layout).load()
+    new TouchBlock(
+      new TouchFront(this.background.node),
+      layout,
+      this.score
+    ).load()
   }
 
-  // update (dt) {}
+  onDestroy(): void {
+    Model.getInstance().ClearPool()
+  }
 }

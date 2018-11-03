@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 13:06:11 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 19:22:40
+ * @Last Modified time: 2018-11-03 20:00:35
  */
 /**
  * 获取单例
@@ -95,6 +95,7 @@ export default class Model {
    * @memberof Model
    */
   public ClearPool(): void {
+    this._nodeList = []
     this._BlockPool.clear()
   }
   /**

@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 20:07:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 19:20:23
+ * @Last Modified time: 2018-11-03 20:14:09
  */
 import ILayout from './ILayout'
 import Model from './Model'
@@ -21,6 +21,7 @@ export default class Layout implements ILayout {
     width: { start: number; end: number }
     height: { start: number; end: number }
   }
+  private start: cc.Vec2
   private color = {
     2: cc.color(237, 241, 21, 255),
     4: cc.color(241, 180, 21, 255),
@@ -56,6 +57,7 @@ export default class Layout implements ILayout {
     height: { start: number; end: number }
   }): Layout => {
     this.edge = size
+    this.start = cc.v2(size.width.start, -size.height.start)
     return this
   }
   /**
@@ -65,27 +67,21 @@ export default class Layout implements ILayout {
    * @memberof Layout
    */
   public draw(step: number = 100): void {
-    // 清空当前视图，重绘
     Model.getInstance().clearNodeList()
     let data = Data.getInstance().data
-    // 锚点起点
-    let start = cc.v2(this.edge.width.start, -this.edge.height.start)
     // 遍历block组
     visitArray(data, (raw, col) => {
       if (data[raw][col] !== 0) {
         // 映射锚点位置
-        let pos = cc.v2(start.x + step * col, start.y - step * raw)
+        let pos = cc.v2(this.start.x + step * col, this.start.y - step * raw)
         // 取对象池节点
         let block = Model.getInstance().getBlock()
         block.setParent(this.background)
         block.setPosition(pos)
-        // 设置数字
         block.getChildByName('label').getComponent(cc.Label).string = String(
           data[raw][col]
         )
-        // 设置颜色
         block.color = this.color[String(data[raw][col])]
-        // 保存引用
         Model.getInstance().saveNode(block)
       }
     })
