@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 13:06:06 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 23:56:43
+ * @Last Modified time: 2018-11-03 10:09:35
  */
 export default interface IBlock {
   goLeft(): void
@@ -14,4 +14,5 @@ export default interface IBlock {
     height: { start: number; end: number }
   }): void
   addBlock(num: number, array: cc.Node[]): void
+  draw(): void
 }

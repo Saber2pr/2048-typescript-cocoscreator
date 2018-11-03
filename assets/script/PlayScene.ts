@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 12:51:23 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 23:57:38
+ * @Last Modified time: 2018-11-03 10:23:10
  */
 const { ccclass, property } = cc._decorator
 import PhysicsManager from './PhysicsManager'
@@ -10,6 +10,7 @@ import TouchFront from './TouchFront'
 import TouchBlock from './TouchBlock'
 import Block from './Block'
 import Model from './Model'
+import Data from './Data'
 
 @ccclass
 export default class PlayScene extends cc.Component {
@@ -27,25 +28,25 @@ export default class PlayScene extends cc.Component {
       .gravity(cc.v2(0, -500))
     // init prefab cache
     Model.getInstance().initPool(this.blockPrefab, 16)
+    //init Data
+    Data.getInstance().init()
   }
 
   start() {
-    // view
-    let nodePool: cc.Node[] = []
-
     // controller
-    let blocker = new Block(nodePool, this.background.node, 100)
-    blocker.initEdge({
-      width: {
-        start: -150,
-        end: 150
-      },
-      height: {
-        start: -150,
-        end: 150
-      }
-    })
-    blocker.addBlock(3, nodePool)
+    let blocker = new Block(this.background.node, 100)
+    blocker
+      .initEdge({
+        width: {
+          start: -150,
+          end: 150
+        },
+        height: {
+          start: -100,
+          end: 100
+        }
+      })
+      .draw()
     new TouchBlock(new TouchFront(this.background.node), blocker).load()
   }
 

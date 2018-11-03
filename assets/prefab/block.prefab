@@ -77,7 +77,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "New Label",
+    "_name": "label",
     "_objFlags": 0,
     "_parent": {
       "__id__": 1

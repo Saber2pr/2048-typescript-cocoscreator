@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 23:14:12
+ * @Last Modified time: 2018-11-03 08:55:12
  */
 import IData from './IData'
 import { transformArray } from './MathVec'
@@ -34,6 +34,10 @@ export default class Data implements IData {
       //   this.map[raw].push(0)
       // }
     }
+  }
+
+  get data(): number[][] {
+    return this.map
   }
 
   public merge(method: string, arr: number[][] = this.map): number[][] {
