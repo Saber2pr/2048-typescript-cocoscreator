@@ -421,7 +421,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 269.02,
+      "width": 460.21,
       "height": 40
     },
     "_anchorPoint": {
@@ -437,8 +437,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 1,
-      "y": 1,
+      "x": 0.79,
+      "y": 0.79,
       "z": 1
     },
     "_rotationX": 0,
@@ -467,8 +467,8 @@
     "_srcBlendFactor": 1,
     "_dstBlendFactor": 771,
     "_useOriginalSize": false,
-    "_string": "Author：AK-12",
-    "_N$string": "Author：AK-12",
+    "_string": "Author：AK-12(Saber2pr)",
+    "_N$string": "Author：AK-12(Saber2pr)",
     "_fontSize": 40,
     "_lineHeight": 40,
     "_enableWrapText": true,
