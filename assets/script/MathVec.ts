@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 21:45:04
+ * @Last Modified time: 2018-11-03 11:00:29
  */
 import IMathVec from './IMathVec'
 
@@ -79,4 +79,22 @@ export let transformArray: <Type>(
     }
   }
   return newArray
+}
+
+export let visitArray: <Type>(
+  arr: Type[][],
+  callback: (value: Type) => void
+) => void = function visitArray<Type>(
+  arr: Type[][],
+  callback: (value: Type) => void
+) {
+  let raws = arr.length
+  let raw = 0
+  for (; raw < raws; raw++) {
+    let cols = arr[raw].length
+    let col = 0
+    for (; col < cols; col++) {
+      callback(arr[raw][col])
+    }
+  }
 }

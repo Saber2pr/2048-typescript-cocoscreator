@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 12:51:23 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 10:23:10
+ * @Last Modified time: 2018-11-03 10:32:03
  */
 const { ccclass, property } = cc._decorator
 import PhysicsManager from './PhysicsManager'
@@ -42,8 +42,8 @@ export default class PlayScene extends cc.Component {
           end: 150
         },
         height: {
-          start: -100,
-          end: 100
+          start: -150,
+          end: 150
         }
       })
       .draw()

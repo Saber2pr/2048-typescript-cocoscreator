@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 20:07:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 10:21:56
+ * @Last Modified time: 2018-11-03 10:36:24
  */
 import IBlock from './IBlock'
 import Model from './Model'
@@ -48,28 +48,28 @@ export default class Block implements IBlock {
     value === 0 ? Model.getInstance().putBlock(node) : null
   }
 
-  public draw(): void {
+  public draw(step: number = 100): void {
     Model.getInstance().clearNodeList()
     let data = Data.getInstance().data
     let raws = data.length
     let raw = 0
-    let step = 100
-    let start = cc.v2(-150, 150)
+    let start = cc.v2(this.edge.width.start, -this.edge.height.start)
     for (; raw < raws; raw++) {
       let cols = data[raw].length
       let col = 0
       for (; col < cols; col++) {
-        let pos = cc.v2(start.x + step * col, start.y - step * raw)
-        let block = Model.getInstance().getBlock()
-        block.setParent(this.background)
-        block.setPosition(pos)
-        block.getChildByName('label').getComponent(cc.Label).string = String(
-          data[raw][col]
-        )
-        Model.getInstance().saveNode(block)
+        if (data[raw][col] !== 0) {
+          let pos = cc.v2(start.x + step * col, start.y - step * raw)
+          let block = Model.getInstance().getBlock()
+          block.setParent(this.background)
+          block.setPosition(pos)
+          block.getChildByName('label').getComponent(cc.Label).string = String(
+            data[raw][col]
+          )
+          Model.getInstance().saveNode(block)
+        }
       }
     }
-    cc.log('nodelist:', Model.getInstance().NodeList.length)
   }
 
   public addBlock(num: number, array: cc.Node[]): void {
@@ -140,5 +140,9 @@ export default class Block implements IBlock {
       })
       block.runAction(cc.moveTo(this.speed, desPos))
     })
+  }
+
+  public log(): void {
+    cc.log('nodelist:', Model.getInstance().NodeList.length)
   }
 }

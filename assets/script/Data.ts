@@ -2,10 +2,10 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 08:55:12
+ * @Last Modified time: 2018-11-03 11:02:20
  */
 import IData from './IData'
-import { transformArray } from './MathVec'
+import { transformArray, visitArray } from './MathVec'
 /**
  *矩阵合并算法
  *
@@ -77,6 +77,10 @@ export default class Data implements IData {
       newArray.push(callback(raw))
     }
     return newArray
+  }
+
+  private addRand(): void {
+    visitArray(this.map, value => {})
   }
 
   private mergeLeft = (arr: number[]): number[] => {
