@@ -2,10 +2,10 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 11:02:20
+ * @Last Modified time: 2018-11-03 11:29:36
  */
 import IData from './IData'
-import { transformArray, visitArray } from './MathVec'
+import { transformArray, visitArray, toInt } from './MathVec'
 /**
  *矩阵合并算法
  *
@@ -79,8 +79,17 @@ export default class Data implements IData {
     return newArray
   }
 
-  private addRand(): void {
-    visitArray(this.map, value => {})
+  public addRand(): void {
+    visitArray(this.map, (raw, col) => {
+      if (this.map[raw][col] === 0) {
+        if (Boolean(Math.random() * 2)) {
+          let randRaw = toInt(Math.random() * this.map.length)
+          let randCol = toInt(Math.random() * this.map[randRaw].length)
+          cc.log('rand', randRaw, randCol)
+          this.map[randRaw].splice(randCol, 1, 2)
+        }
+      }
+    })
   }
 
   private mergeLeft = (arr: number[]): number[] => {

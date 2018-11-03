@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 11:00:29
+ * @Last Modified time: 2018-11-03 11:16:12
  */
 import IMathVec from './IMathVec'
 
@@ -83,10 +83,10 @@ export let transformArray: <Type>(
 
 export let visitArray: <Type>(
   arr: Type[][],
-  callback: (value: Type) => void
+  callback: (raw: number, col: number) => void
 ) => void = function visitArray<Type>(
   arr: Type[][],
-  callback: (value: Type) => void
+  callback: (raw: number, col: number) => void
 ) {
   let raws = arr.length
   let raw = 0
@@ -94,7 +94,11 @@ export let visitArray: <Type>(
     let cols = arr[raw].length
     let col = 0
     for (; col < cols; col++) {
-      callback(arr[raw][col])
+      callback(raw, col)
     }
   }
+}
+
+export function toInt(value) {
+  return parseInt(String(value))
 }
