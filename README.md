@@ -1,5 +1,7 @@
 # 2048-typescript-cocoscreator
 
+size: 399 KB
+
 用 typescript 写的 2048，creator 版本 2.0
 [点击预览](https://saber2pr.github.io/MyWeb/build/2048/)
 
@@ -10,7 +12,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 21:30:29
+ * @Last Modified time: 2018-11-03 21:38:19
  */
 import {
   transformArray,
