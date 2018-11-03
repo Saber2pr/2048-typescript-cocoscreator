@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 20:07:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 17:27:05
+ * @Last Modified time: 2018-11-03 18:59:57
  */
 import ILayout from './ILayout'
 import Model from './Model'
@@ -22,6 +22,19 @@ export default class Layout implements ILayout {
   private edge: {
     width: { start: number; end: number }
     height: { start: number; end: number }
+  }
+  private color = {
+    2: cc.color(237, 241, 21, 255),
+    4: cc.color(241, 180, 21, 255),
+    8: cc.color(171, 241, 21, 255),
+    16: cc.color(149, 160, 216, 255),
+    32: cc.color(187, 149, 216, 255),
+    64: cc.color(216, 149, 209, 255),
+    128: cc.color(28, 118, 156, 255),
+    256: cc.color(16, 74, 99, 255),
+    512: cc.color(168, 85, 25, 255),
+    1024: cc.color(236, 122, 38, 255),
+    2048: cc.color(236, 86, 33, 255)
   }
   /**
    *Creates an instance of Layout.
@@ -76,6 +89,7 @@ export default class Layout implements ILayout {
         block.getChildByName('label').getComponent(cc.Label).string = String(
           data[raw][col]
         )
+        block.color = this.color[String(data[raw][col])]
         this.setPos(block, cc.v2(raw, col))
         Model.getInstance().saveNode(block, cc.v2(raw, col))
       }

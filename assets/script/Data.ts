@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 16:19:22
+ * @Last Modified time: 2018-11-03 18:45:24
  */
 import {
   transformArray,
@@ -117,25 +117,27 @@ export default class Data {
    * @memberof Data
    */
   public addRand(): boolean {
-    let result = false
+    let hasNext = false
     let points = PointList()
     visitArray(this.map, (raw, col) => {
       if (this.map[raw][col] === 0) {
         points.push({ x: raw, y: col })
-        result = true
+        hasNext = true
       }
       this.updateTimes += 2
     })
-    let index = toInt(Math.random() * points.length)
-    alterArray(
-      this.map,
-      {
-        raw: points[index].x,
-        col: points[index].y
-      },
-      2
-    )
-    return result
+    if (hasNext) {
+      let index = toInt(Math.random() * points.length)
+      alterArray(
+        this.map,
+        {
+          raw: points[index].x,
+          col: points[index].y
+        },
+        2
+      )
+    }
+    return hasNext
   }
 
   private mergeLeft = (arr: number[]): number[] => {

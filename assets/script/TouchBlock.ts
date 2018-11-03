@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 13:06:00 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 16:31:26
+ * @Last Modified time: 2018-11-03 19:00:51
  */
 import TouchFront from './ITouchFront'
 import Layout from './ILayout'
@@ -32,25 +32,29 @@ export default class TouchBlock {
     Data.getInstance().merge('left')
     this.result = Data.getInstance().addRand()
     this.testResult()
-    this.layout.goLeft()
+    // this.layout.goLeft()
+    this.layout.draw()
   }
   private right = (): void => {
     Data.getInstance().merge('right')
     this.result = Data.getInstance().addRand()
     this.testResult()
-    this.layout.goRight()
+    // this.layout.goRight()
+    this.layout.draw()
   }
   private up = (): void => {
     Data.getInstance().merge('up')
     this.result = Data.getInstance().addRand()
     this.testResult()
-    this.layout.goUp()
+    // this.layout.goUp()
+    this.layout.draw()
   }
   private down = (): void => {
     Data.getInstance().merge('down')
     this.result = Data.getInstance().addRand()
     this.testResult()
-    this.layout.goDown()
+    // this.layout.goDown()
+    this.layout.draw()
   }
   /**
    *四个方向都没合并

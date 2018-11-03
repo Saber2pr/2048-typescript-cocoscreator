@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 17:14:46
+ * @Last Modified time: 2018-11-03 19:01:47
  */
 import IMathVec, { Point } from './IMathVec'
 
@@ -209,5 +209,3 @@ export function PointList(): Array<Point> {
 export function judgePos(pos1: Point, pos2: Point): boolean {
   return pos1.x === pos2.x && pos1.y === pos2.y ? true : false
 }
-
-export function indexOf() {}
