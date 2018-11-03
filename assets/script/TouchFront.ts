@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 13:31:42 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 13:16:34
+ * @Last Modified time: 2018-11-03 18:06:37
  */
 import ITouchFront from './ITouchFront'
 /**
@@ -93,15 +93,20 @@ export default class TouchFront implements ITouchFront {
     ) {
       return
     }
-    if (touchPos.x - originPos.x > this.offset) {
-      !!this.callbackRight ? this.callbackRight() : null
-    } else if (touchPos.x - originPos.x < -this.offset) {
-      !!this.callbackLeft ? this.callbackLeft() : null
-    }
-    if (touchPos.y - originPos.y > this.offset) {
-      !!this.callbackUp ? this.callbackUp() : null
-    } else if (touchPos.y - originPos.y < -this.offset) {
-      !!this.callbackDown ? this.callbackDown() : null
+    if (
+      Math.abs(touchPos.x - originPos.x) > Math.abs(touchPos.y - originPos.y)
+    ) {
+      if (touchPos.x - originPos.x > this.offset) {
+        !!this.callbackRight ? this.callbackRight() : null
+      } else if (touchPos.x - originPos.x < -this.offset) {
+        !!this.callbackLeft ? this.callbackLeft() : null
+      }
+    } else {
+      if (touchPos.y - originPos.y > this.offset) {
+        !!this.callbackUp ? this.callbackUp() : null
+      } else if (touchPos.y - originPos.y < -this.offset) {
+        !!this.callbackDown ? this.callbackDown() : null
+      }
     }
   }
 }
