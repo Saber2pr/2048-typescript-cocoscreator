@@ -2,18 +2,22 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 11:29:36
+ * @Last Modified time: 2018-11-03 13:13:02
  */
-import IData from './IData'
-import { transformArray, visitArray, toInt } from './MathVec'
+import {
+  transformArray,
+  visitArray,
+  randFunc,
+  visitArrayRand,
+  alterArray
+} from './MathVec'
 /**
  *矩阵合并算法
  *
  * @export
  * @class Data
- * @implements {IData}
  */
-export default class Data implements IData {
+export default class Data {
   private constructor() {
     this.map = new Array<Array<number>>()
     this.logInfor = ''
@@ -25,22 +29,40 @@ export default class Data implements IData {
   }
   private map: Array<Array<number>>
   private logInfor: string
+  /**
+   *初始化数据
+   *
+   * @param {number} [size=4]
+   * @memberof Data
+   */
   public init(size: number = 4): void {
     let raw: number = 0
     for (; raw < size; raw++) {
-      this.map.push([0, 2, 2, 4])
-      // let col: number = 0
-      // for (; col < size; col++) {
-      //   this.map[raw].push(0)
-      // }
+      this.map.push([0, 0, 0, 0])
     }
+    visitArrayRand(this.map, (raw, col) => {
+      alterArray(
+        this.map,
+        {
+          raw: raw,
+          col: col
+        },
+        2
+      )
+    })
   }
 
   get data(): number[][] {
     return this.map
   }
-
-  public merge(method: string, arr: number[][] = this.map): number[][] {
+  /**
+   *合并方向
+   *
+   * @param {string} method
+   * @param {number[][]} [arr=this.map]
+   * @memberof Data
+   */
+  public merge(method: string, arr: number[][] = this.map): void {
     switch (method) {
       case 'left':
         this.map = this.mergeSuper(arr, this.mergeLeft)
@@ -65,7 +87,6 @@ export default class Data implements IData {
         break
     }
     this.logInfor = this.logInfor.length > 50 ? '' : this.logInfor
-    return this.map
   }
 
   private mergeSuper = (
@@ -78,17 +99,25 @@ export default class Data implements IData {
     }
     return newArray
   }
-
+  /**
+   *随机位置添加元素
+   *
+   * @memberof Data
+   */
   public addRand(): void {
     visitArray(this.map, (raw, col) => {
-      if (this.map[raw][col] === 0) {
-        if (Boolean(Math.random() * 2)) {
-          let randRaw = toInt(Math.random() * this.map.length)
-          let randCol = toInt(Math.random() * this.map[randRaw].length)
-          cc.log('rand', randRaw, randCol)
-          this.map[randRaw].splice(randCol, 1, 2)
+      randFunc(() => {
+        if (this.map[raw][col] === 0) {
+          alterArray(
+            this.map,
+            {
+              raw: raw,
+              col: col
+            },
+            2
+          )
         }
-      }
+      })
     })
   }
 

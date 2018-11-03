@@ -2,10 +2,10 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 13:06:00 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 11:08:05
+ * @Last Modified time: 2018-11-03 12:33:12
  */
 import TouchFront from './ITouchFront'
-import Block from './IBlock'
+import Layout from './ILayout'
 import Data from './Data'
 /**
  *建立触摸与block之间关系
@@ -15,10 +15,10 @@ import Data from './Data'
  */
 export default class TouchBlock {
   private touchFront: TouchFront
-  private block: Block
-  constructor(touchFront: TouchFront, block: Block) {
+  private layout: Layout
+  constructor(touchFront: TouchFront, layout: Layout) {
     this.touchFront = touchFront
-    this.block = block
+    this.layout = layout
   }
 
   public load = (): void => {
@@ -29,28 +29,28 @@ export default class TouchBlock {
     Data.getInstance().merge('left')
     Data.getInstance().addRand()
     Data.getInstance().log()
-    // this.block.goLeft()
-    this.block.draw()
+    // this.layout.goLeft()
+    this.layout.draw()
   }
   private right = (): void => {
     Data.getInstance().merge('right')
     Data.getInstance().addRand()
     Data.getInstance().log()
-    // this.block.goRight()
-    this.block.draw()
+    // this.layout.goRight()
+    this.layout.draw()
   }
   private up = (): void => {
     Data.getInstance().merge('up')
     Data.getInstance().addRand()
     Data.getInstance().log()
-    // this.block.goUp()
-    this.block.draw()
+    // this.layout.goUp()
+    this.layout.draw()
   }
   private down = (): void => {
     Data.getInstance().merge('down')
     Data.getInstance().addRand()
     Data.getInstance().log()
-    // this.block.goDown()
-    this.block.draw()
+    // this.layout.goDown()
+    this.layout.draw()
   }
 }

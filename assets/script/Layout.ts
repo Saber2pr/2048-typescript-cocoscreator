@@ -2,20 +2,20 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 20:07:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 10:36:24
+ * @Last Modified time: 2018-11-03 13:14:48
  */
-import IBlock from './IBlock'
+import ILayout from './ILayout'
 import Model from './Model'
-import MathVec from './MathVec'
+import MathVec, { visitArray } from './MathVec'
 import Data from './Data'
 /**
- *Block节点对象的逻辑
+ *Block节点视图的逻辑
  *
  * @export
- * @class Block
- * @implements {IBlock}
+ * @class Layout
+ * @implements {ILayout}
  */
-export default class Block implements IBlock {
+export default class Layout implements ILayout {
   private background: cc.Node
   private offset: number
   private speed: number
@@ -23,7 +23,13 @@ export default class Block implements IBlock {
     width: { start: number; end: number }
     height: { start: number; end: number }
   }
-
+  /**
+   *Creates an instance of Layout.
+   * @param {cc.Node} background
+   * @param {number} offset
+   * @param {number} [speed=0.2]
+   * @memberof Layout
+   */
   constructor(background: cc.Node, offset: number, speed: number = 0.2) {
     this.offset = offset
     this.speed = speed
@@ -36,10 +42,15 @@ export default class Block implements IBlock {
       callback(block)
     }
   }
+  /**
+   *初始化边界
+   *
+   * @memberof Layout
+   */
   public initEdge = (size: {
     width: { start: number; end: number }
     height: { start: number; end: number }
-  }): Block => {
+  }): Layout => {
     this.edge = size
     return this
   }
@@ -47,29 +58,28 @@ export default class Block implements IBlock {
   private putNullNode(node: cc.Node, value: number) {
     value === 0 ? Model.getInstance().putBlock(node) : null
   }
-
+  /**
+   *绘制block组
+   *
+   * @param {number} [step=100]
+   * @memberof Layout
+   */
   public draw(step: number = 100): void {
     Model.getInstance().clearNodeList()
     let data = Data.getInstance().data
-    let raws = data.length
-    let raw = 0
     let start = cc.v2(this.edge.width.start, -this.edge.height.start)
-    for (; raw < raws; raw++) {
-      let cols = data[raw].length
-      let col = 0
-      for (; col < cols; col++) {
-        if (data[raw][col] !== 0) {
-          let pos = cc.v2(start.x + step * col, start.y - step * raw)
-          let block = Model.getInstance().getBlock()
-          block.setParent(this.background)
-          block.setPosition(pos)
-          block.getChildByName('label').getComponent(cc.Label).string = String(
-            data[raw][col]
-          )
-          Model.getInstance().saveNode(block)
-        }
+    visitArray(data, (raw, col) => {
+      if (data[raw][col] !== 0) {
+        let pos = cc.v2(start.x + step * col, start.y - step * raw)
+        let block = Model.getInstance().getBlock()
+        block.setParent(this.background)
+        block.setPosition(pos)
+        block.getChildByName('label').getComponent(cc.Label).string = String(
+          data[raw][col]
+        )
+        Model.getInstance().saveNode(block)
       }
-    }
+    })
   }
 
   public addBlock(num: number, array: cc.Node[]): void {
@@ -84,7 +94,15 @@ export default class Block implements IBlock {
       flag++
     })
   }
-
+  /**
+   *判断边界
+   *
+   * @private
+   * @param {cc.Vec2} vec2
+   * @param {(vec2: cc.Vec2) => cc.Vec2} callback
+   * @returns {cc.Vec2}
+   * @memberof Layout
+   */
   private judgeEdge(
     vec2: cc.Vec2,
     callback: (vec2: cc.Vec2) => cc.Vec2

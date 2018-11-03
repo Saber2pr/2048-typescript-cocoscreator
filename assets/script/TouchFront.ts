@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 13:31:42 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-02 22:48:25
+ * @Last Modified time: 2018-11-03 13:16:34
  */
 import ITouchFront from './ITouchFront'
 /**
@@ -10,6 +10,7 @@ import ITouchFront from './ITouchFront'
  *
  * @export
  * @class TouchFront
+ * @implements {ITouchFront}
  */
 export default class TouchFront implements ITouchFront {
   private node: cc.Node
@@ -35,7 +36,11 @@ export default class TouchFront implements ITouchFront {
     this._lock = 0
     this.delta = delta
   }
-
+  /**
+   *注册手势回调
+   *
+   * @memberof TouchFront
+   */
   public submit = (
     callbackLeft?: Function,
     callbackRight?: Function,
@@ -48,7 +53,11 @@ export default class TouchFront implements ITouchFront {
     this.callbackDown = callbackDown
     return this
   }
-
+  /**
+   *监听触摸
+   *
+   * @memberof TouchFront
+   */
   public listen = (): void => {
     let originPos: cc.Vec2
     this.node.on(
@@ -71,7 +80,12 @@ export default class TouchFront implements ITouchFront {
       this._lock = 0
     })
   }
-
+  /**
+   *检测偏移执行回调
+   *
+   * @private
+   * @memberof TouchFront
+   */
   private testPos = (originPos: cc.Vec2, touchPos: cc.Vec2): void => {
     if (
       Math.abs(touchPos.x - originPos.x) < this.offset &&

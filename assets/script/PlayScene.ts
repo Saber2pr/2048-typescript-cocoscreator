@@ -2,13 +2,13 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 12:51:23 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 10:32:03
+ * @Last Modified time: 2018-11-03 12:17:39
  */
 const { ccclass, property } = cc._decorator
 import PhysicsManager from './PhysicsManager'
 import TouchFront from './TouchFront'
 import TouchBlock from './TouchBlock'
-import Block from './Block'
+import Layout from './Layout'
 import Model from './Model'
 import Data from './Data'
 
@@ -34,8 +34,8 @@ export default class PlayScene extends cc.Component {
 
   start() {
     // controller
-    let blocker = new Block(this.background.node, 100)
-    blocker
+    let layout = new Layout(this.background.node, 100)
+    layout
       .initEdge({
         width: {
           start: -150,
@@ -47,7 +47,7 @@ export default class PlayScene extends cc.Component {
         }
       })
       .draw()
-    new TouchBlock(new TouchFront(this.background.node), blocker).load()
+    new TouchBlock(new TouchFront(this.background.node), layout).load()
   }
 
   // update (dt) {}

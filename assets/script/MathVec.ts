@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 11:16:12
+ * @Last Modified time: 2018-11-03 13:11:37
  */
 import IMathVec from './IMathVec'
 
@@ -63,10 +63,15 @@ export default class MathVec implements IMathVec {
     return result
   }
 }
-
-export let transformArray: <Type>(
-  arr: Type[][]
-) => Type[][] = function transformArray<Type>(arr: Type[][]): Type[][] {
+/**
+ *矩阵行列互换
+ *
+ * @export
+ * @template Type
+ * @param {Type[][]} arr
+ * @returns {Type[][]}
+ */
+export function transformArray<Type>(arr: Type[][]): Type[][] {
   let newArray: Array<Array<Type>> = new Array<Array<Type>>()
   let raws = arr.length
   let raw = 0
@@ -80,11 +85,15 @@ export let transformArray: <Type>(
   }
   return newArray
 }
-
-export let visitArray: <Type>(
-  arr: Type[][],
-  callback: (raw: number, col: number) => void
-) => void = function visitArray<Type>(
+/**
+ *遍历二维数组元素
+ *
+ * @export
+ * @template Type
+ * @param {Type[][]} arr
+ * @param {(raw: number, col: number) => void} callback
+ */
+export function visitArray<Type>(
   arr: Type[][],
   callback: (raw: number, col: number) => void
 ) {
@@ -98,7 +107,64 @@ export let visitArray: <Type>(
     }
   }
 }
-
+/**
+ *随机访问二维数组元素
+ *
+ * @export
+ * @template Type
+ * @param {Type[][]} arr
+ * @param {(raw: number, col: number) => void} callback
+ */
+export function visitArrayRand<Type>(
+  arr: Type[][],
+  callback: (raw: number, col: number) => void
+) {
+  let randRow = toInt(Math.random() * arr.length)
+  let randCol = toInt(Math.random() * arr[randRow].length)
+  callback(randRow, randCol)
+}
+/**
+ *转为整型
+ *
+ * @export
+ * @param {*} value
+ * @returns
+ */
 export function toInt(value) {
   return parseInt(String(value))
+}
+/**
+ *随机概率执行函数
+ *
+ * @export
+ * @param {Function} callback
+ * @param {number} [value=2]
+ */
+export function randFunc(callback: Function, value: number = 2): void {
+  let rand = Boolean(toInt(Math.random() * value))
+  if (rand) {
+    callback(rand)
+  }
+}
+/**
+ *替换二维数组指定位置的值
+ *
+ * @export
+ * @template Type
+ * @param {Type[][]} arr
+ * @param
+ *   { raw: number
+ *     col: number
+ *   } pos
+ * @param {*} value
+ */
+export function alterArray<Type>(
+  arr: Type[][],
+  pos: {
+    raw: number
+    col: number
+  },
+  value: any
+) {
+  arr[pos.raw].splice(pos.col, 1, value)
 }
