@@ -13,7 +13,6 @@ export default interface ILayout {
     width: { start: number; end: number }
     height: { start: number; end: number }
   }): void
-  addBlock(num: number, array: cc.Node[]): void
   draw(step?: number): void
   log(): void
 }

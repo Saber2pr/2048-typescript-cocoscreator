@@ -2,8 +2,9 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 13:06:11 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 10:20:02
+ * @Last Modified time: 2018-11-03 17:28:10
  */
+import { Point } from './IMathVec'
 /**
  * 获取单例
  * @function getInstance
@@ -21,6 +22,7 @@ export default class Model {
   private constructor() {
     this._BlockPool = new cc.NodePool()
     this._nodeList = new Array<cc.Node>()
+    this._recordList = new Array<Point>()
   }
   static instance: Model
   static getInstance(): Model {
@@ -30,6 +32,7 @@ export default class Model {
   private _BlockPool: cc.NodePool
   private _prafab: cc.Prefab
   private _nodeList: cc.Node[]
+  private _recordList: Array<Point>
   public initPool(prefab: cc.Prefab, size: number) {
     for (let i = 0; i < size; ++i) {
       let block = cc.instantiate(prefab)
@@ -39,6 +42,10 @@ export default class Model {
   }
   get NodeList(): cc.Node[] {
     return this._nodeList
+  }
+  get PointList(): Array<Point> {
+    this._recordList = []
+    return this._recordList
   }
   public putBlock(node: cc.Node): void {
     this._BlockPool.put(node)
@@ -52,8 +59,9 @@ export default class Model {
     }
     return block
   }
-  public saveNode(node: cc.Node): void {
+  public saveNode(node: cc.Node, vec2: cc.Vec2): void {
     this._nodeList.push(node)
+    this._recordList.push(vec2)
   }
   public clearNodeList(): void {
     for (var node of this._nodeList) {
@@ -63,5 +71,8 @@ export default class Model {
   }
   public ClearPool(): void {
     this._BlockPool.clear()
+  }
+  public log(): void {
+    console.log(this._BlockPool.size())
   }
 }

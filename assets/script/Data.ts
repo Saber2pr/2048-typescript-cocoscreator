@@ -2,14 +2,16 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 13:29:49
+ * @Last Modified time: 2018-11-03 16:19:22
  */
 import {
   transformArray,
   visitArray,
-  randFunc,
   visitArrayRand,
-  alterArray
+  alterArray,
+  moreFunc,
+  toInt,
+  PointList
 } from './MathVec'
 /**
  *矩阵合并算法
@@ -21,6 +23,7 @@ export default class Data {
   private constructor() {
     this.map = new Array<Array<number>>()
     this.logInfor = ''
+    this.updateTimes = 0
   }
   static instance: Data
   static getInstance(): Data {
@@ -29,6 +32,7 @@ export default class Data {
   }
   private map: Array<Array<number>>
   private logInfor: string
+  private updateTimes: number
   /**
    *初始化数据
    *
@@ -40,21 +44,28 @@ export default class Data {
     for (; raw < size; raw++) {
       this.map.push([0, 0, 0, 0])
     }
-    visitArrayRand(this.map, (raw, col) => {
-      alterArray(
-        this.map,
-        {
-          raw: raw,
-          col: col
-        },
-        2
-      )
-    })
+    moreFunc(() => {
+      visitArrayRand(this.map, (raw, col) => {
+        alterArray(
+          this.map,
+          {
+            raw: raw,
+            col: col
+          },
+          2
+        )
+      })
+    }, 2)
   }
 
   get data(): number[][] {
     return this.map
   }
+
+  get score(): number {
+    return this.updateTimes
+  }
+
   /**
    *合并方向
    *
@@ -107,21 +118,23 @@ export default class Data {
    */
   public addRand(): boolean {
     let result = false
+    let points = PointList()
     visitArray(this.map, (raw, col) => {
       if (this.map[raw][col] === 0) {
-        randFunc(() => {
-          alterArray(
-            this.map,
-            {
-              raw: raw,
-              col: col
-            },
-            2
-          )
-        })
+        points.push({ x: raw, y: col })
         result = true
       }
+      this.updateTimes += 2
     })
+    let index = toInt(Math.random() * points.length)
+    alterArray(
+      this.map,
+      {
+        raw: points[index].x,
+        col: points[index].y
+      },
+      2
+    )
     return result
   }
 
@@ -180,6 +193,6 @@ export default class Data {
    * @memberof Data
    */
   public log(): void {
-    console.log(this.map, this.logInfor)
+    console.log(this.map, this.logInfor, this.updateTimes)
   }
 }

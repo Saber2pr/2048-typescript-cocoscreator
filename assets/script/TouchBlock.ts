@@ -2,14 +2,14 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 13:06:00 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 13:50:22
+ * @Last Modified time: 2018-11-03 16:31:26
  */
 import TouchFront from './ITouchFront'
 import Layout from './ILayout'
 import Data from './Data'
 /**
  *建立触摸与block之间关系
- *
+//  *
  * @export
  * @class TouchBlock
  */
@@ -31,38 +31,26 @@ export default class TouchBlock {
   private left = (): void => {
     Data.getInstance().merge('left')
     this.result = Data.getInstance().addRand()
-    this.log()
     this.testResult()
-    Data.getInstance().log()
-    // this.layout.goLeft()
-    this.layout.draw()
+    this.layout.goLeft()
   }
   private right = (): void => {
     Data.getInstance().merge('right')
     this.result = Data.getInstance().addRand()
-    this.log()
     this.testResult()
-    Data.getInstance().log()
-    // this.layout.goRight()
-    this.layout.draw()
+    this.layout.goRight()
   }
   private up = (): void => {
     Data.getInstance().merge('up')
     this.result = Data.getInstance().addRand()
-    this.log()
     this.testResult()
-    Data.getInstance().log()
-    // this.layout.goUp()
-    this.layout.draw()
+    this.layout.goUp()
   }
   private down = (): void => {
     Data.getInstance().merge('down')
     this.result = Data.getInstance().addRand()
-    this.log()
     this.testResult()
-    Data.getInstance().log()
-    // this.layout.goDown()
-    this.layout.draw()
+    this.layout.goDown()
   }
   /**
    *四个方向都没合并

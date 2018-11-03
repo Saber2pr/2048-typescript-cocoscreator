@@ -2,9 +2,9 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 13:22:13
+ * @Last Modified time: 2018-11-03 17:14:46
  */
-import IMathVec from './IMathVec'
+import IMathVec, { Point } from './IMathVec'
 
 export default class MathVec implements IMathVec {
   /**
@@ -30,37 +30,6 @@ export default class MathVec implements IMathVec {
   }
   public randVaule(): number {
     return this.start + parseInt(String(Math.random() * this.num * this.step))
-  }
-  /**
-   *cc.Vec2的基础运算
-   *
-   * @param {cc.Vec2} v1
-   * @param {string} method
-   * @param {cc.Vec2} v2
-   * @returns {cc.Vec2}
-   * @example computed(cc.v2(0, 0), '+', cc.v2(1, 1))
-   * @memberof MathVec
-   */
-  public computed(v1: cc.Vec2, method: string, v2: cc.Vec2): cc.Vec2 {
-    let result
-    switch (method) {
-      case '+':
-        result = cc.v2(v1.x + v2.x, v1.y + v2.y)
-        break
-      case '-':
-        result = cc.v2(v1.x - v2.x, v1.y - v2.y)
-        break
-      case '*':
-        result = cc.v2(v1.x * v2.x, v1.y * v2.y)
-        break
-      case '/':
-        result = cc.v2(v1.x / v2.x, v1.y / v2.y)
-        break
-
-      default:
-        throw new Error('computed method unknown')
-    }
-    return result
   }
 }
 /**
@@ -114,6 +83,7 @@ export function visitArray<Type>(
  * @template Type
  * @param {Type[][]} arr
  * @param {(raw: number, col: number) => void} callback
+ * @param {number} [times=1] 访问次数
  */
 export function visitArrayRand<Type>(
   arr: Type[][],
@@ -122,6 +92,25 @@ export function visitArrayRand<Type>(
   let randRow = toInt(Math.random() * arr.length)
   let randCol = toInt(Math.random() * arr[randRow].length)
   callback(randRow, randCol)
+}
+/**
+ *多次执行回调函数
+ *
+ * @export
+ * @param {Function} callback
+ * @param {number} [times=1] 执行次数
+ */
+export function moreFunc(callback: Function, times: number = 1): void {
+  let count = 0
+  let loop = (): void => {
+    if (count >= times) {
+      return
+    }
+    count++
+    callback()
+    loop()
+  }
+  loop()
 }
 /**
  *转为整型
@@ -168,3 +157,57 @@ export function alterArray<Type>(
 ) {
   arr[pos.raw].splice(pos.col, 1, value)
 }
+
+/**
+ *cc.Vec2的基础运算
+ *
+ * @param {cc.Vec2} v1
+ * @param {string} method
+ * @param {cc.Vec2} v2
+ * @returns {cc.Vec2}
+ * @example computed(cc.v2(0, 0), '+', cc.v2(1, 1))
+ * @memberof MathVec
+ */
+export function computed(v1: cc.Vec2, method: string, v2: cc.Vec2): cc.Vec2 {
+  let result
+  switch (method) {
+    case '+':
+      result = cc.v2(v1.x + v2.x, v1.y + v2.y)
+      break
+    case '-':
+      result = cc.v2(v1.x - v2.x, v1.y - v2.y)
+      break
+    case '*':
+      result = cc.v2(v1.x * v2.x, v1.y * v2.y)
+      break
+    case '/':
+      result = cc.v2(v1.x / v2.x, v1.y / v2.y)
+      break
+
+    default:
+      throw new Error('computed method unknown')
+  }
+  return result
+}
+/**
+ *PointList得到二维坐标容器
+ *
+ * @export
+ * @returns {Array<Point>}
+ */
+export function PointList(): Array<Point> {
+  return new Array<Point>()
+}
+/**
+ *判断两个点是否相等
+ *
+ * @export
+ * @param {Point} pos1
+ * @param {Point} pos2
+ * @returns {boolean}
+ */
+export function judgePos(pos1: Point, pos2: Point): boolean {
+  return pos1.x === pos2.x && pos1.y === pos2.y ? true : false
+}
+
+export function indexOf() {}

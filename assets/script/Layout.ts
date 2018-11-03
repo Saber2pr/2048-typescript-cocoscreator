@@ -2,11 +2,11 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 20:07:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 13:14:48
+ * @Last Modified time: 2018-11-03 17:27:05
  */
 import ILayout from './ILayout'
 import Model from './Model'
-import MathVec, { visitArray } from './MathVec'
+import { visitArray, computed, judgePos } from './MathVec'
 import Data from './Data'
 /**
  *Block节点视图的逻辑
@@ -40,6 +40,9 @@ export default class Layout implements ILayout {
   private all(callback: Function): void {
     for (const block of Model.getInstance().NodeList) {
       callback(block)
+      setTimeout(() => {
+        this.draw()
+      }, this.speed * 1000)
     }
   }
   /**
@@ -54,12 +57,8 @@ export default class Layout implements ILayout {
     this.edge = size
     return this
   }
-
-  private putNullNode(node: cc.Node, value: number) {
-    value === 0 ? Model.getInstance().putBlock(node) : null
-  }
   /**
-   *绘制block组
+   *根据矩阵绘制block组
    *
    * @param {number} [step=100]
    * @memberof Layout
@@ -77,25 +76,39 @@ export default class Layout implements ILayout {
         block.getChildByName('label').getComponent(cc.Label).string = String(
           data[raw][col]
         )
-        Model.getInstance().saveNode(block)
+        this.setPos(block, cc.v2(raw, col))
+        Model.getInstance().saveNode(block, cc.v2(raw, col))
       }
     })
   }
-
-  public addBlock(num: number, array: cc.Node[]): void {
-    let rand = new MathVec(-150, 100, 4)
-    let flag: number = 0
-    let handle = setInterval(() => {
-      flag >= num ? clearInterval(handle) : null
-      let block = Model.getInstance().getBlock()
-      block.setParent(this.background)
-      block.setPosition(rand.randPos())
-      array.push(block)
-      flag++
-    })
+  /**
+   *设置block索引
+   *
+   * @private
+   * @param {cc.Node} node
+   * @param {cc.Vec2} vec2
+   * @memberof Layout
+   */
+  private setPos(node: cc.Node, vec2: cc.Vec2): void {
+    node.getChildByName('x').getComponent(cc.Label).string = String(vec2.x)
+    node.getChildByName('y').getComponent(cc.Label).string = String(vec2.y)
   }
   /**
-   *判断边界
+   *获取block索引
+   *
+   * @private
+   * @param {*} node
+   * @returns {cc.Vec2}
+   * @memberof Layout
+   */
+  private getPos(node): cc.Vec2 {
+    let x = Number(node.getChildByName('x').getComponent(cc.Label).string)
+    let y = Number(node.getChildByName('y').getComponent(cc.Label).string)
+    return cc.v2(x, y)
+  }
+
+  /**
+   *判断边界,如果点在范围内，则执行回调
    *
    * @private
    * @param {cc.Vec2} vec2
@@ -105,58 +118,66 @@ export default class Layout implements ILayout {
    */
   private judgeEdge(
     vec2: cc.Vec2,
-    callback: (vec2: cc.Vec2) => cc.Vec2
-  ): cc.Vec2 {
-    let desPos: cc.Vec2
+    delta: cc.Vec2,
+    callback: (vec2: cc.Vec2) => void
+  ): void {
+    let desPos: cc.Vec2 = computed(vec2, '+', delta)
     if (
-      vec2.x >= this.edge.width.start &&
-      vec2.x <= this.edge.width.end &&
-      vec2.y >= this.edge.height.start &&
-      vec2.y <= this.edge.height.end
+      desPos.x >= this.edge.width.start &&
+      desPos.x <= this.edge.width.end &&
+      desPos.y >= this.edge.height.start &&
+      desPos.y <= this.edge.height.end
     ) {
-      cc.log('in edge', vec2)
-      desPos = callback(vec2)
+      callback(desPos)
     } else {
-      cc.log('on edge', vec2)
-      desPos = cc.v2(vec2.x, vec2.y)
+      callback(vec2)
     }
-    return desPos
   }
 
   public goLeft = (): void => {
-    cc.log('left')
     this.all(block => {
-      let desPos = this.judgeEdge(cc.v2(block.x, block.y), vec2 => {
-        return cc.v2(vec2.x - this.offset, vec2.y)
-      })
-      block.runAction(cc.moveTo(this.speed, desPos))
+      this.judgeEdge(
+        cc.v2(block.x, block.y),
+        cc.v2(-this.offset, 0),
+        desPos => {
+          // judgePos(
+          //   this.getPos(block)
+          //   )
+          let pos = this.getPos(block)
+          let nextPos = cc.v2(pos.x, pos.y + 1)
+          let test = Model.getInstance().PointList
+          cc.log(test, nextPos)
+          block.runAction(cc.moveTo(this.speed, desPos))
+        }
+      )
     })
   }
 
   public goRight = (): void => {
     this.all(block => {
-      let desPos = this.judgeEdge(cc.v2(block.x, block.y), vec2 => {
-        return cc.v2(vec2.x + this.offset, vec2.y)
+      this.judgeEdge(cc.v2(block.x, block.y), cc.v2(this.offset, 0), desPos => {
+        block.runAction(cc.moveTo(this.speed, desPos))
       })
-      block.runAction(cc.moveTo(this.speed, desPos))
     })
   }
 
   public goUp = (): void => {
     this.all(block => {
-      let desPos = this.judgeEdge(cc.v2(block.x, block.y), vec2 => {
-        return cc.v2(vec2.x, vec2.y + this.offset)
+      this.judgeEdge(cc.v2(block.x, block.y), cc.v2(0, this.offset), desPos => {
+        block.runAction(cc.moveTo(this.speed, desPos))
       })
-      block.runAction(cc.moveTo(this.speed, desPos))
     })
   }
 
   public goDown = (): void => {
     this.all(block => {
-      let desPos = this.judgeEdge(cc.v2(block.x, block.y), vec2 => {
-        return cc.v2(vec2.x, vec2.y - this.offset)
-      })
-      block.runAction(cc.moveTo(this.speed, desPos))
+      this.judgeEdge(
+        cc.v2(block.x, block.y),
+        cc.v2(0, -this.offset),
+        desPos => {
+          block.runAction(cc.moveTo(this.speed, desPos))
+        }
+      )
     })
   }
 

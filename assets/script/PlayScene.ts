@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 12:51:23 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 12:17:39
+ * @Last Modified time: 2018-11-03 14:07:44
  */
 const { ccclass, property } = cc._decorator
 import PhysicsManager from './PhysicsManager'
