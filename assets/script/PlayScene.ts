@@ -14,9 +14,11 @@ import Data from './Data'
 @ccclass
 export default class PlayScene extends cc.Component {
   // LIFE-CYCLE CALLBACKS:
-
+  
   @property(cc.Sprite)
   background: cc.Sprite = null
+  @property(cc.Sprite)
+  layout: cc.Sprite = null
   @property(cc.Prefab)
   blockPrefab: cc.Prefab = null
   @property(cc.Label)
@@ -31,7 +33,7 @@ export default class PlayScene extends cc.Component {
 
   start() {
     // controller
-    let layout = new Layout(this.background.node)
+    let layout = new Layout(this.layout.node)
     layout
       .initEdge({
         width: {
