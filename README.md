@@ -1,6 +1,6 @@
 # 2048-typescript-cocoscreator
 
-size: 399 KB
+size: 421 KB
 
 用 typescript 写的 2048，creator 版本 2.0
 [点击预览](https://saber2pr.github.io/MyWeb/build/2048/)
