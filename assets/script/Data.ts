@@ -46,7 +46,6 @@ export default class Data {
       raw: size,
       col: size
     })
-    cc.log(this.map)
     moreFunc(() => {
       visitArrayRand(this.map, (raw, col) => {
         alterArray(this.map, {
