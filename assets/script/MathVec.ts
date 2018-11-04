@@ -50,12 +50,10 @@ export default class MathVec implements IMathVec {
 export function transformArray<Type>(arr: Type[][]): Type[][] {
   let newArray: Array<Array<Type>> = new Array<Array<Type>>()
   let raws = arr.length
-  let raw = 0
-  for (; raw < raws; raw++) {
+  for (let raw = 0; raw < raws; raw++) {
     newArray.push([])
-    let col = 0
     let cols = arr[raw].length
-    for (; col < cols; col++) {
+    for (let col = 0; col < cols; col++) {
       newArray[raw][col] = arr[col][raw]
     }
   }
@@ -74,11 +72,9 @@ export function visitArray<Type>(
   callback: (raw: number, col: number) => void
 ) {
   let raws = arr.length
-  let raw = 0
-  for (; raw < raws; raw++) {
+  for (let raw = 0; raw < raws; raw++) {
     let cols = arr[raw].length
-    let col = 0
-    for (; col < cols; col++) {
+    for (let col = 0; col < cols; col++) {
       callback(raw, col)
     }
   }
@@ -245,7 +241,12 @@ export function fillArraySuper<Type>(
   value: Type,
   size: { raw: number; col: number }
 ): Type[][] {
-  let _arr = fillArray(value, size.col)
-  let arr = fillArray<Array<Type>>(_arr, size.raw)
+  let arr = new Array<Array<Type>>()
+  for (let raw = 0; raw < size.raw; raw++) {
+    arr.push([])
+    for (let col = 0; col < size.col; col++) {
+      arr[raw][col] = value
+    }
+  }
   return arr
 }

@@ -11,7 +11,8 @@ import {
   alterArray,
   moreFunc,
   toInt,
-  PointList
+  PointList,
+  fillArraySuper
 } from './MathVec'
 /**
  *矩阵合并算法
@@ -31,31 +32,21 @@ export default class Data {
   private updateTimes: number
   private maxValue: number
   /**
-   *初始化矩阵数据，必须为正方矩阵
+   *初始化矩阵数据
    *
-   * @param {number} [size=4]
+   * @param {number} size 方阵边长
+   * @param {number} [maxValue=2048] 数字最大值
    * @memberof Data
    */
-  public init(
-    size: number,
-    callback: (arr: Array<Array<number>>) => void,
-    maxValue: number = 2048
-  ): void {
+  public init(size: number, maxValue: number = 2048): void {
     this.logInfor = ''
     this.updateTimes = 0
     this.maxValue = maxValue
-    this.map = new Array<Array<number>>()
-    try {
-      for (let i = 0; i < size; i++) {
-        callback(this.map)
-      }
-      if (this.map[0].length !== size) {
-        throw new Error('Data init Error, 矩阵必须为方阵')
-      }
-    } catch (error) {
-      console.error(error)
-      console.table(this.map)
-    }
+    this.map = fillArraySuper(0, {
+      raw: size,
+      col: size
+    })
+    cc.log(this.map)
     moreFunc(() => {
       visitArrayRand(this.map, (raw, col) => {
         alterArray(this.map, {

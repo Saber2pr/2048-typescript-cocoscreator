@@ -28,13 +28,7 @@ export default class PlayScene extends cc.Component {
     // init prefab cache
     Model.getInstance().initPool(this.blockPrefab, 16)
     //init Data
-    Data.getInstance().init(
-      4,
-      map => {
-        map.push([0, 0, 0, 0])
-      },
-      2048
-    )
+    Data.getInstance().init(4, 2048)
   }
 
   start() {
