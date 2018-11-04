@@ -152,8 +152,23 @@ export function randFunc(callback: Function, value: number = 1.5): void {
 export function alterArray<Type>(
   arr: Type[][],
   pos: {
+    /**
+     *替换的元素所在行
+     *
+     * @type {number}
+     */
     raw: number
+    /**
+     *替换的元素所在列
+     *
+     * @type {number}
+     */
     col: number
+    /**
+     *替换后的值
+     *
+     * @type {*}
+     */
     value: any
   }
 ) {
