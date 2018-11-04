@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-04 13:38:54
+ * @Last Modified time: 2018-11-04 14:17:46
  */
 import {
   transformArray,
@@ -29,6 +29,7 @@ export default class Data {
   private map: Array<Array<number>>
   private logInfor: string
   private updateTimes: number
+  private maxValue: number
   /**
    *初始化矩阵数据，必须为正方矩阵
    *
@@ -37,10 +38,12 @@ export default class Data {
    */
   public init(
     size: number,
-    callback: (arr: Array<Array<number>>) => void
+    callback: (arr: Array<Array<number>>) => void,
+    maxValue: number = 2048
   ): void {
     this.logInfor = ''
     this.updateTimes = 0
+    this.maxValue = maxValue
     this.map = new Array<Array<number>>()
     try {
       for (let i = 0; i < size; i++) {
@@ -64,7 +67,7 @@ export default class Data {
     }, 2)
   }
   /**
-   *获取当前矩阵
+   *当前矩阵
    *
    * @readonly
    * @type {number[][]}
@@ -74,7 +77,7 @@ export default class Data {
     return this.map
   }
   /**
-   *获取分数
+   *分数
    *
    * @readonly
    * @type {number}
@@ -83,7 +86,16 @@ export default class Data {
   get score(): number {
     return this.updateTimes
   }
-
+  /**
+   *最大值
+   *
+   * @readonly
+   * @type {number}
+   * @memberof Data
+   */
+  get MaxValue(): number {
+    return this.maxValue
+  }
   /**
    *合并方向
    *
@@ -182,7 +194,10 @@ export default class Data {
           i -= 1
         } else if (arr[i] === arr[nextI]) {
           arr[i] = arr[i] * 2
-          this.updateTimes += arr[i]
+          this.updateTimes =
+            arr[i] < this.maxValue
+              ? this.updateTimes + arr[i]
+              : this.updateTimes + 1
           arr[nextI] = 0
         }
       }
@@ -213,7 +228,10 @@ export default class Data {
           i -= 1
         } else if (arr[i] === arr[nextI]) {
           arr[i] = arr[i] * 2
-          this.updateTimes += arr[i]
+          this.updateTimes =
+            arr[i] < this.maxValue
+              ? this.updateTimes + arr[i]
+              : this.updateTimes + 1
           arr[nextI] = 0
         }
       }

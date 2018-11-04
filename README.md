@@ -9,10 +9,10 @@ size: 399 KB
 
 ```ts
 /*
- * @Author: AK-12 
- * @Date: 2018-11-02 17:06:17 
+ * @Author: AK-12
+ * @Date: 2018-11-02 17:06:17
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 21:38:19
+ * @Last Modified time: 2018-11-04 14:22:57
  */
 import {
   transformArray,
@@ -37,35 +37,47 @@ export default class Data {
     return this.instance
   }
   private map: Array<Array<number>>
+  private logInfor: string
   private updateTimes: number
+  private maxValue: number
   /**
-   *初始化数据
+   *初始化矩阵数据，必须为正方矩阵
    *
    * @param {number} [size=4]
    * @memberof Data
    */
-  public init(size: number = 4): void {
-    this.map = new Array<Array<number>>()
+  public init(
+    size: number,
+    callback: (arr: Array<Array<number>>) => void,
+    maxValue: number = 2048
+  ): void {
+    this.logInfor = ''
     this.updateTimes = 0
-    let raw: number = 0
-    for (; raw < size; raw++) {
-      this.map.push([0, 0, 0, 0])
+    this.maxValue = maxValue
+    this.map = new Array<Array<number>>()
+    try {
+      for (let i = 0; i < size; i++) {
+        callback(this.map)
+      }
+      if (this.map[0].length !== size) {
+        throw new Error('Data init Error, 矩阵必须为方阵')
+      }
+    } catch (error) {
+      console.error(error)
+      console.table(this.map)
     }
     moreFunc(() => {
       visitArrayRand(this.map, (raw, col) => {
-        alterArray(
-          this.map,
-          {
-            raw: raw,
-            col: col
-          },
-          2
-        )
+        alterArray(this.map, {
+          raw: raw,
+          col: col,
+          value: 2
+        })
       })
     }, 2)
   }
   /**
-   *获取当前矩阵
+   *当前矩阵
    *
    * @readonly
    * @type {number[][]}
@@ -75,7 +87,7 @@ export default class Data {
     return this.map
   }
   /**
-   *获取分数
+   *分数
    *
    * @readonly
    * @type {number}
@@ -84,7 +96,16 @@ export default class Data {
   get score(): number {
     return this.updateTimes
   }
-
+  /**
+   *最大值
+   *
+   * @readonly
+   * @type {number}
+   * @memberof Data
+   */
+  get MaxValue(): number {
+    return this.maxValue
+  }
   /**
    *合并方向
    *
@@ -96,22 +117,27 @@ export default class Data {
     switch (method) {
       case 'left':
         this.map = this.mergeSuper(arr, this.mergeLeft)
+        this.logInfor += 'mergeLeft--'
         break
       case 'right':
         this.map = this.mergeSuper(arr, this.mergeRight)
+        this.logInfor += 'mergeRight--'
         break
       case 'up':
         this.map = this.mergeSuper(transformArray(arr), this.mergeLeft)
         this.map = transformArray(this.map)
+        this.logInfor += 'mergeUp--'
         break
       case 'down':
         this.map = this.mergeSuper(transformArray(arr), this.mergeRight)
         this.map = transformArray(this.map)
+        this.logInfor += 'mergeDown--'
         break
       default:
         throw new Error('Data merge method error')
         break
     }
+    this.logInfor = this.logInfor.length > 50 ? '' : this.logInfor
   }
   /**
    *反转回调处理矩阵
@@ -146,14 +172,11 @@ export default class Data {
     })
     if (hasNext) {
       let index = toInt(Math.random() * points.length)
-      alterArray(
-        this.map,
-        {
-          raw: points[index].x,
-          col: points[index].y
-        },
-        2
-      )
+      alterArray(this.map, {
+        raw: points[index].x,
+        col: points[index].y,
+        value: 2
+      })
     }
     return hasNext
   }
@@ -181,7 +204,10 @@ export default class Data {
           i -= 1
         } else if (arr[i] === arr[nextI]) {
           arr[i] = arr[i] * 2
-          this.updateTimes += arr[i]
+          this.updateTimes =
+            arr[i] < this.maxValue
+              ? this.updateTimes + arr[i]
+              : this.updateTimes + 1
           arr[nextI] = 0
         }
       }
@@ -212,12 +238,14 @@ export default class Data {
           i -= 1
         } else if (arr[i] === arr[nextI]) {
           arr[i] = arr[i] * 2
-          this.updateTimes += arr[i]
+          this.updateTimes =
+            arr[i] < this.maxValue
+              ? this.updateTimes + arr[i]
+              : this.updateTimes + 1
           arr[nextI] = 0
         }
       }
     }
     return arr
   }
-}
 ```

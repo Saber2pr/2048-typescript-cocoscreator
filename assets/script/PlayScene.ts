@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 12:51:23 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-04 13:37:36
+ * @Last Modified time: 2018-11-04 14:21:32
  */
 const { ccclass, property } = cc._decorator
 import TouchFront from './TouchFront'
@@ -28,9 +28,13 @@ export default class PlayScene extends cc.Component {
     // init prefab cache
     Model.getInstance().initPool(this.blockPrefab, 16)
     //init Data
-    Data.getInstance().init(4, map => {
-      map.push([0, 0, 0, 0])
-    })
+    Data.getInstance().init(
+      4,
+      map => {
+        map.push([0, 0, 0, 0])
+      },
+      2048
+    )
   }
 
   start() {

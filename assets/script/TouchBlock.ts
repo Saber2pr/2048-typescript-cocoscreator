@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 13:06:00 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 20:35:54
+ * @Last Modified time: 2018-11-04 14:10:34
  */
 import TouchFront from './ITouchFront'
 import Layout from './ILayout'
@@ -24,6 +24,17 @@ export default class TouchBlock {
     this.layout = layout
     this._count = 0
     this._score = score
+    this.result = true
+  }
+  /**
+   *结果
+   *
+   * @readonly
+   * @type {boolean}
+   * @memberof TouchBlock
+   */
+  get Result(): boolean {
+    return this.result
   }
   /**
    *加载触摸事件
@@ -74,7 +85,7 @@ export default class TouchBlock {
         this._count = 0
       }
     }
-    if (Number(this._score.string) >= 2048) {
+    if (Math.abs(Data.getInstance().score) % 2) {
       this.gameEnd()
     }
   }
