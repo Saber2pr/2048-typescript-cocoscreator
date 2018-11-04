@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 20:15:59
+ * @Last Modified time: 2018-11-04 13:38:54
  */
 import {
   transformArray,
@@ -30,29 +30,36 @@ export default class Data {
   private logInfor: string
   private updateTimes: number
   /**
-   *初始化数据
+   *初始化矩阵数据，必须为正方矩阵
    *
    * @param {number} [size=4]
    * @memberof Data
    */
-  public init(size: number = 4): void {
-    this.map = new Array<Array<number>>()
+  public init(
+    size: number,
+    callback: (arr: Array<Array<number>>) => void
+  ): void {
     this.logInfor = ''
     this.updateTimes = 0
-    let raw: number = 0
-    for (; raw < size; raw++) {
-      this.map.push([0, 0, 0, 0])
+    this.map = new Array<Array<number>>()
+    try {
+      for (let i = 0; i < size; i++) {
+        callback(this.map)
+      }
+      if (this.map[0].length !== size) {
+        throw new Error('Data init Error, 矩阵必须为方阵')
+      }
+    } catch (error) {
+      console.error(error)
+      console.table(this.map)
     }
     moreFunc(() => {
       visitArrayRand(this.map, (raw, col) => {
-        alterArray(
-          this.map,
-          {
-            raw: raw,
-            col: col
-          },
-          2
-        )
+        alterArray(this.map, {
+          raw: raw,
+          col: col,
+          value: 2
+        })
       })
     }, 2)
   }
@@ -143,14 +150,11 @@ export default class Data {
     })
     if (hasNext) {
       let index = toInt(Math.random() * points.length)
-      alterArray(
-        this.map,
-        {
-          raw: points[index].x,
-          col: points[index].y
-        },
-        2
-      )
+      alterArray(this.map, {
+        raw: points[index].x,
+        col: points[index].y,
+        value: 2
+      })
     }
     return hasNext
   }

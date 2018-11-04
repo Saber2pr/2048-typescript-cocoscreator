@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 19:18:14
+ * @Last Modified time: 2018-11-04 13:15:51
  */
 import IMathVec, { Point } from './IMathVec'
 
@@ -90,7 +90,6 @@ export function visitArray<Type>(
  * @template Type
  * @param {Type[][]} arr
  * @param {(raw: number, col: number) => void} callback
- * @param {number} [times=1] 访问次数
  */
 export function visitArrayRand<Type>(
   arr: Type[][],
@@ -159,10 +158,11 @@ export function alterArray<Type>(
   pos: {
     raw: number
     col: number
-  },
-  value: any
+    value: any
+  }
 ) {
-  arr[pos.raw].splice(pos.col, 1, value)
+  // arr[pos.raw].splice(pos.col, 1, pos.value)
+  arr[pos.raw][pos.col] = pos.value
 }
 
 /**
@@ -215,4 +215,37 @@ export function PointList(): Array<Point> {
  */
 export function judgePos(pos1: Point, pos2: Point): boolean {
   return pos1.x === pos2.x && pos1.y === pos2.y ? true : false
+}
+/**
+ *得到填充数组
+ *
+ * @export
+ * @template Type
+ * @param {Type} value
+ * @param {number} [length=1]
+ * @returns {Type[]}
+ */
+export function fillArray<Type>(value: Type, length: number = 1): Type[] {
+  let arr = new Array<Type>()
+  for (let i = 0; i < length; i++) {
+    arr.push(value)
+  }
+  return arr
+}
+/**
+ *得到填充二维数组
+ *
+ * @export
+ * @template Type
+ * @param {Type} value
+ * @param {{ raw: number; col: number }} size
+ * @returns {Type[][]}
+ */
+export function fillArraySuper<Type>(
+  value: Type,
+  size: { raw: number; col: number }
+): Type[][] {
+  let _arr = fillArray(value, size.col)
+  let arr = fillArray<Array<Type>>(_arr, size.raw)
+  return arr
 }

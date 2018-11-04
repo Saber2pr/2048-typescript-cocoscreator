@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 12:51:23 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 20:05:45
+ * @Last Modified time: 2018-11-04 13:37:36
  */
 const { ccclass, property } = cc._decorator
 import TouchFront from './TouchFront'
@@ -14,7 +14,7 @@ import Data from './Data'
 @ccclass
 export default class PlayScene extends cc.Component {
   // LIFE-CYCLE CALLBACKS:
-  
+
   @property(cc.Sprite)
   background: cc.Sprite = null
   @property(cc.Sprite)
@@ -28,7 +28,9 @@ export default class PlayScene extends cc.Component {
     // init prefab cache
     Model.getInstance().initPool(this.blockPrefab, 16)
     //init Data
-    Data.getInstance().init()
+    Data.getInstance().init(4, map => {
+      map.push([0, 0, 0, 0])
+    })
   }
 
   start() {

@@ -2,11 +2,11 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 20:07:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 20:14:09
+ * @Last Modified time: 2018-11-04 13:39:34
  */
 import ILayout from './ILayout'
 import Model from './Model'
-import { visitArray, computed, judgePos } from './MathVec'
+import { visitArray } from './MathVec'
 import Data from './Data'
 /**
  *Block节点视图的逻辑
