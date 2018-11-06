@@ -12,18 +12,8 @@ import {
   moreFunc,
   toInt,
   PointList,
-  fillArraySuper,
-  fillArray
+  fillArraySuper
 } from './MathVec'
-/**
- *储存数值和对应合并位置差值
- *
- * @interface dpos
- */
-interface dpos {
-  data: number
-  delta: number
-}
 /**
  *矩阵合并算法
  *
@@ -37,7 +27,7 @@ export default class Data {
     this.instance = !!this.instance ? this.instance : new Data()
     return this.instance
   }
-  private map: Array<Array<dpos>>
+  private map: Array<Array<number>>
   private logInfor: string
   private updateTimes: number
   private maxValue: number
@@ -52,57 +42,29 @@ export default class Data {
     this.logInfor = ''
     this.updateTimes = 0
     this.maxValue = maxValue
-    this.map = fillArraySuper<dpos>(
-      {
-        data: 0,
-        delta: 0
-      },
-      {
-        raw: size,
-        col: size
-      }
-    )
-    let _init = fillArraySuper(0, {
-      raw: 4,
-      col: 4
+    this.map = fillArraySuper(0, {
+      raw: size,
+      col: size
     })
     moreFunc(() => {
-      visitArrayRand<number>(this.data, (raw, col) => {
-        alterArray<number>(_init, {
+      visitArrayRand(this.map, (raw, col) => {
+        alterArray(this.map, {
           raw: raw,
           col: col,
           value: 2
         })
       })
     }, 2)
-    this.data = _init
-    console.log('----', this.data)
   }
   /**
-   *set当前矩阵
+   *当前矩阵
    *
-   * @memberof Data
-   */
-  set data(arr: number[][]) {
-    visitArray<number>(arr, (raw, col) => {
-      this.map[raw][col].data = arr[raw][col]
-    })
-  }
-  /**
-   *get当前矩阵
-   *
+   * @readonly
    * @type {number[][]}
    * @memberof Data
    */
   get data(): number[][] {
-    let map = fillArraySuper<number>(0, {
-      raw: this.map.length,
-      col: this.map.length
-    })
-    visitArray<dpos>(this.map, (raw, col) => {
-      map[raw][col] = this.map[raw][col].data
-    })
-    return map
+    return this.map
   }
   /**
    *分数
@@ -128,32 +90,27 @@ export default class Data {
    *合并方向
    *
    * @param {string} method
-   * @param {number[][]} [remoteArr=this.data]
-   * @param {number[][]} originArr
+   * @param {number[][]} [arr=this.map]
    * @memberof Data
    */
-  public merge(
-    method: string,
-    remoteArr: number[][] = this.data,
-    originArr: number[][] = this.data
-  ): void {
+  public merge(method: string, arr: number[][] = this.map): void {
     switch (method) {
       case 'left':
-        originArr = this.mergeSuper(remoteArr, this.mergeLeft)
+        this.map = this.mergeSuper(arr, this.mergeLeft)
         this.logInfor += 'mergeLeft--'
         break
       case 'right':
-        originArr = this.mergeSuper(remoteArr, this.mergeRight)
+        this.map = this.mergeSuper(arr, this.mergeRight)
         this.logInfor += 'mergeRight--'
         break
       case 'up':
-        originArr = this.mergeSuper(transformArray(remoteArr), this.mergeLeft)
-        originArr = transformArray(remoteArr)
+        this.map = this.mergeSuper(transformArray(arr), this.mergeLeft)
+        this.map = transformArray(this.map)
         this.logInfor += 'mergeUp--'
         break
       case 'down':
-        originArr = this.mergeSuper(transformArray(remoteArr), this.mergeRight)
-        originArr = transformArray(remoteArr)
+        this.map = this.mergeSuper(transformArray(arr), this.mergeRight)
+        this.map = transformArray(this.map)
         this.logInfor += 'mergeDown--'
         break
       default:
@@ -187,15 +144,15 @@ export default class Data {
   public addRand(): boolean {
     let hasNext = false
     let points = PointList()
-    visitArray(this.data, (raw, col) => {
-      if (this.data[raw][col] === 0) {
+    visitArray(this.map, (raw, col) => {
+      if (this.map[raw][col] === 0) {
         points.push({ x: raw, y: col })
         hasNext = true
       }
     })
     if (hasNext) {
       let index = toInt(Math.random() * points.length)
-      alterArray<number>(this.data, {
+      alterArray(this.map, {
         raw: points[index].x,
         col: points[index].y,
         value: 2
