@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 13:06:00 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-04 14:10:34
+ * @Last Modified time: 2018-11-06 17:55:58
  */
 import TouchFront from './ITouchFront'
 import Layout from './ILayout'
@@ -16,6 +16,7 @@ import Data from './Data'
 export default class TouchBlock {
   private touchFront: TouchFront
   private layout: Layout
+  private DataStn: Data
   private result: boolean
   private _count: number
   private _score: cc.Label
@@ -25,6 +26,7 @@ export default class TouchBlock {
     this._count = 0
     this._score = score
     this.result = true
+    this.DataStn = Data.getInstance()
   }
   /**
    *结果
@@ -45,29 +47,29 @@ export default class TouchBlock {
     // 触摸手势回调
     this.touchFront.submit(this.left, this.right, this.up, this.down).listen()
   }
-  private left = (): void => {
-    Data.getInstance().merge('left')
-    this.result = Data.getInstance().addRand()
+  private layoutStep(command: string, speed: number = 0.3): void {
+    let delta = this.DataStn.merge(command)
+    this.result = this.DataStn.addRand()
     this.testResult()
-    this.layout.draw()
+    this.layout.action(command, delta, speed)
+    new cc.Component().schedule(() => {
+      this.layout.draw(this.DataStn.data)
+    }, speed)
+    // setTimeout(() => {
+
+    // }, speed * 1000)
+  }
+  private left = (): void => {
+    this.layoutStep('left')
   }
   private right = (): void => {
-    Data.getInstance().merge('right')
-    this.result = Data.getInstance().addRand()
-    this.testResult()
-    this.layout.draw()
+    this.layoutStep('right')
   }
   private up = (): void => {
-    Data.getInstance().merge('up')
-    this.result = Data.getInstance().addRand()
-    this.testResult()
-    this.layout.draw()
+    this.layoutStep('up')
   }
   private down = (): void => {
-    Data.getInstance().merge('down')
-    this.result = Data.getInstance().addRand()
-    this.testResult()
-    this.layout.draw()
+    this.layoutStep('down')
   }
   /**
    *四个方向都没合并
@@ -76,7 +78,7 @@ export default class TouchBlock {
    * @memberof TouchBlock
    */
   private testResult = (): void => {
-    this._score.string = String(Data.getInstance().score)
+    this._score.string = String(this.DataStn.score)
     this._count++
     if (this._count > 4) {
       if (this.result === false) {
@@ -85,7 +87,7 @@ export default class TouchBlock {
         this._count = 0
       }
     }
-    if (Math.abs(Data.getInstance().score) % 2) {
+    if (Math.abs(this.DataStn.score) % 2) {
       this.gameEnd()
     }
   }
