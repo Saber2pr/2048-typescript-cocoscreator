@@ -169,7 +169,7 @@ export function alterArray<Type>(
      *
      * @type {*}
      */
-    value: any
+    value: Type
   }
 ) {
   // arr[pos.raw].splice(pos.col, 1, pos.value)
