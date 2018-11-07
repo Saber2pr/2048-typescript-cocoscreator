@@ -35,6 +35,7 @@ export default class TouchBlock {
   }
   private layoutStep(command: string, speed: number = 0.2): void {
     let delta = this.DataStn.merge(command)
+    cc.log(delta)
     this.layout.action(command, delta, speed)
     // 等待节点动作完成
     setTimeout(() => {

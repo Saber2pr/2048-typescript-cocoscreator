@@ -257,7 +257,11 @@ export default class Data {
           if (arr[i] === arr[m]) {
             delta[m] = m - i
           } else {
-            delta[m] = m - i - 1
+            if (arr[i] === 0) {
+              delta[m] = m - i
+            } else {
+              delta[m] = m - i - 1
+            }
           }
           break
         }
@@ -300,7 +304,11 @@ export default class Data {
           if (arr[m] === arr[i]) {
             delta[m] = i - m
           } else {
-            delta[m] = i - m - 1
+            if (arr[i] === 0) {
+              delta[m] = i - m
+            } else {
+              delta[m] = i - m - 1
+            }
           }
           break
         }
