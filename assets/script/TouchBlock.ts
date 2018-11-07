@@ -1,6 +1,6 @@
 /*
- * @Author: AK-12 
- * @Date: 2018-11-02 13:06:00 
+ * @Author: AK-12
+ * @Date: 2018-11-02 13:06:00
  * @Last Modified by: AK-12
  * @Last Modified time: 2018-11-07 17:43:01
  */
@@ -114,8 +114,12 @@ export default class TouchBlock {
    */
   private testResult = (): void => {
     this._score.string = String(this.DataStn.score)
-    if (this.DataStn.result || this.DataStn.isFull) {
+    if (this.DataStn.result) {
       this.gameEnd()
+    } else if (this.DataStn.isFull) {
+      if (!this.DataStn.hasTwice) {
+        this.gameEnd()
+      }
     }
   }
   /**

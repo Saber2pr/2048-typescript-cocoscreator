@@ -1,6 +1,6 @@
 /*
- * @Author: AK-12 
- * @Date: 2018-11-02 17:06:17 
+ * @Author: AK-12
+ * @Date: 2018-11-02 17:06:17
  * @Last Modified by: AK-12
  * @Last Modified time: 2018-11-07 17:39:30
  */
@@ -12,7 +12,8 @@ import {
   toInt,
   PointList,
   fillArraySuper,
-  fillArray
+  fillArray,
+  hasTwiceSuper
 } from './MathVec'
 /**
  *一维数组与合并偏差
@@ -197,7 +198,7 @@ export default class Data {
     }
   }
   /**
-   *检测矩阵数字是否都不为0
+   *检测矩阵数字是否都不为0, 若都不为0则返回true
    *
    * @readonly
    * @type {boolean}
@@ -211,6 +212,16 @@ export default class Data {
       }
     })
     return !this.hasNext
+  }
+  /**
+   *检测矩阵是否存在相邻相同数字, 若存在则返回ture
+   *
+   * @readonly
+   * @type {boolean}
+   * @memberof Data
+   */
+  get hasTwice(): boolean {
+    return hasTwiceSuper(this.map)
   }
   /**
    *随机位置添加元素

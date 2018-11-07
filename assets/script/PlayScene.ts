@@ -1,6 +1,6 @@
 /*
- * @Author: AK-12 
- * @Date: 2018-11-01 12:51:23 
+ * @Author: AK-12
+ * @Date: 2018-11-01 12:51:23
  * @Last Modified by: AK-12
  * @Last Modified time: 2018-11-07 17:41:16
  */
@@ -10,6 +10,7 @@ import TouchFront from './TouchFront'
 import Layout from './Layout'
 import Model from './Model'
 import Data from './Data'
+import { hasTwiceSuper } from './MathVec'
 
 @ccclass
 export default class PlayScene extends cc.Component {

@@ -1,6 +1,6 @@
 /*
- * @Author: AK-12 
- * @Date: 2018-11-02 17:06:29 
+ * @Author: AK-12
+ * @Date: 2018-11-02 17:06:29
  * @Last Modified by: AK-12
  * @Last Modified time: 2018-11-04 13:15:51
  */
@@ -264,4 +264,54 @@ export function fillArraySuper<Type>(
     }
   }
   return arr
+}
+/**
+ *检测一维数组是否有相邻相同数字
+ *
+ * @export
+ * @param {number[]} arr
+ * @returns {boolean} 若存在则返回ture
+ */
+export function hasTwice(arr: number[]): boolean {
+  let len = arr.length
+  let result = false
+  for (let i = 0; i < len - 1; i++) {
+    if (arr[i] === arr[i + 1]) {
+      result = true
+      break
+    }
+  }
+  return result
+}
+/**
+ *检测二维数组行方向是否有相邻相同数字
+ *
+ * @export
+ * @param {number[][]} map
+ * @returns {boolean} 若存在则返回ture
+ */
+export function testRows(map: number[][]): boolean {
+  let result: boolean = false
+  for (let raw of map) {
+    result = hasTwice(raw)
+    if (result) {
+      break
+    }
+  }
+  return result
+}
+/**
+ *检测二维数组是否有相邻相同数字
+ *
+ * @export
+ * @param {number[][]} map
+ * @returns {boolean} 若存在则返回ture
+ */
+export function hasTwiceSuper(map: number[][]): boolean {
+  let resultRaw: boolean = false
+  let resultCol: boolean = false
+  resultRaw = testRows(map)
+  let mapTurn = transformArray(map)
+  resultCol = testRows(mapTurn)
+  return resultRaw || resultCol
 }
