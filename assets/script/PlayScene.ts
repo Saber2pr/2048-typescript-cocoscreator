@@ -10,6 +10,7 @@ import TouchBlock from './TouchBlock'
 import Layout from './Layout'
 import Model from './Model'
 import Data from './Data'
+import { fillArraySuper } from './MathVec'
 
 @ccclass
 export default class PlayScene extends cc.Component {

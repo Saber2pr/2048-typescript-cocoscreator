@@ -47,8 +47,10 @@ export default class Data {
     return this.instance
   }
   private map: Array<Array<number>>
+  private __map: Array<Array<number>>
   private updateTimes: number
   private maxValue: number
+  private hasNext: boolean
   /**
    *初始化矩阵数据
    *
@@ -60,6 +62,10 @@ export default class Data {
     this.updateTimes = 0
     this.maxValue = maxValue
     this.map = fillArraySuper(0, {
+      raw: size,
+      col: size
+    })
+    this.__map = fillArraySuper(0, {
       raw: size,
       col: size
     })
@@ -96,13 +102,23 @@ export default class Data {
     return this.maxValue
   }
   /**
+   *检测数据是否变动
+   *
+   * @readonly
+   * @type {boolean}
+   * @memberof Data
+   */
+  get isChanged(): boolean {
+    return this.__map.toString() !== this.map.toString()
+  }
+  /**
    *获取updateTimes状态
    *
    * @readonly
-   * @type {boolean} 数字超过maxValue则返回false
+   * @type {boolean} 数字超过maxValue则返回true
    * @memberof Data
    */
-  get status(): boolean {
+  get result(): boolean {
     return Boolean(Math.abs(this.updateTimes) % 2)
   }
   /**
@@ -117,6 +133,9 @@ export default class Data {
     method: string,
     arr: number[][] = this.map
   ): Array<Array<number>> {
+    visitArray(this.map, (raw, col) => {
+      this.__map[raw][col] = this.map[raw][col]
+    })
     let delta: Array<Array<number>>
     switch (method) {
       case 'left':
@@ -178,6 +197,22 @@ export default class Data {
     }
   }
   /**
+   *检测矩阵数字是否都不为0
+   *
+   * @readonly
+   * @type {boolean}
+   * @memberof Data
+   */
+  get isFull(): boolean {
+    this.hasNext = false
+    visitArray(this.map, (raw, col) => {
+      if (this.map[raw][col] === 0) {
+        this.hasNext = true
+      }
+    })
+    return !this.hasNext
+  }
+  /**
    *随机位置添加元素
    *
    * @param {number} [times=1]
@@ -185,16 +220,15 @@ export default class Data {
    * @memberof Data
    */
   public addRand(times: number = 1): boolean {
-    let hasNext = false
     let points = PointList()
     moreFunc(() => {
       visitArray(this.map, (raw, col) => {
         if (this.map[raw][col] === 0) {
           points.push({ x: raw, y: col })
-          hasNext = true
+          this.hasNext = true
         }
       })
-      if (hasNext) {
+      if (this.hasNext) {
         let index = toInt(Math.random() * points.length)
         alterArray(this.map, {
           raw: points[index].x,
@@ -203,7 +237,7 @@ export default class Data {
         })
       }
     }, times)
-    return hasNext
+    return this.hasNext
   }
   /**
    *向左合并
@@ -220,7 +254,11 @@ export default class Data {
       for (m = i + 1; m < len; m++) {
         if (arr[m] !== 0) {
           nextI = m
-          delta[m] = m - i
+          if (arr[i] === arr[m]) {
+            delta[m] = m - i
+          } else {
+            delta[m] = m - i - 1
+          }
           break
         }
       }
@@ -259,7 +297,11 @@ export default class Data {
       for (m = i - 1; m >= 0; m--) {
         if (arr[m] !== 0) {
           nextI = m
-          delta[m] = m - i
+          if (arr[m] === arr[i]) {
+            delta[m] = i - m
+          } else {
+            delta[m] = i - m - 1
+          }
           break
         }
       }

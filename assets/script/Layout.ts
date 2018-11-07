@@ -140,11 +140,11 @@ export default class Layout implements ILayout {
       case 'left':
         return cc.moveBy(speed, cc.v2(-delta, 0))
       case 'right':
-        return cc.moveBy(speed, cc.v2(-delta, 0))
+        return cc.moveBy(speed, cc.v2(delta, 0))
       case 'up':
         return cc.moveBy(speed, cc.v2(0, delta))
       case 'down':
-        return cc.moveBy(speed, cc.v2(0, delta))
+        return cc.moveBy(speed, cc.v2(0, -delta))
       default:
         throw new Error('action command error')
     }

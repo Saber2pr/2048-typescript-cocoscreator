@@ -17,26 +17,12 @@ export default class TouchBlock {
   private touchFront: TouchFront
   private layout: Layout
   private DataStn: Data
-  private result: boolean
-  private _count: number
   private _score: cc.Label
   constructor(touchFront: TouchFront, layout: Layout, score: cc.Label) {
     this.touchFront = touchFront
     this.layout = layout
-    this._count = 0
     this._score = score
-    this.result = true
     this.DataStn = Data.getInstance()
-  }
-  /**
-   *结果
-   *
-   * @readonly
-   * @type {boolean}
-   * @memberof TouchBlock
-   */
-  get Result(): boolean {
-    return this.result
   }
   /**
    *加载触摸事件
@@ -47,17 +33,17 @@ export default class TouchBlock {
     // 触摸手势回调
     this.touchFront.submit(this.left, this.right, this.up, this.down).listen()
   }
-  private layoutStep(command: string, speed: number = 0.3): void {
+  private layoutStep(command: string, speed: number = 0.2): void {
     let delta = this.DataStn.merge(command)
-    this.result = this.DataStn.addRand()
-    this.testResult()
     this.layout.action(command, delta, speed)
-    new cc.Component().schedule(() => {
+    // 等待节点动作完成
+    setTimeout(() => {
       this.layout.draw(this.DataStn.data)
-    }, speed)
-    // setTimeout(() => {
-
-    // }, speed * 1000)
+    }, speed * 1100)
+    if (this.DataStn.isChanged) {
+      this.DataStn.addRand()
+    }
+    this.testResult()
   }
   private left = (): void => {
     this.layoutStep('left')
@@ -72,22 +58,14 @@ export default class TouchBlock {
     this.layoutStep('down')
   }
   /**
-   *四个方向都没合并
+   *判断结果
    *
    * @private
    * @memberof TouchBlock
    */
   private testResult = (): void => {
     this._score.string = String(this.DataStn.score)
-    this._count++
-    if (this._count > 4) {
-      if (this.result === false) {
-        this.gameEnd()
-      } else {
-        this._count = 0
-      }
-    }
-    if (Math.abs(this.DataStn.score) % 2) {
+    if (this.DataStn.result || this.DataStn.isFull) {
       this.gameEnd()
     }
   }
@@ -97,15 +75,10 @@ export default class TouchBlock {
    * @private
    * @memberof TouchBlock
    */
-  private gameEnd = (): void => {
-    cc.director.loadScene('EndScene')
-  }
-  /**
-   *输出调试信息
-   *
-   * @memberof TouchBlock
-   */
-  public log = (): void => {
-    cc.log('result', this.result, 'count', this._count)
+  private gameEnd = (speed: number = 0.2): void => {
+    // 等待节点动作完成
+    setTimeout(() => {
+      cc.director.loadScene('EndScene')
+    }, speed * 1100)
   }
 }

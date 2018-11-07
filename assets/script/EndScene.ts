@@ -14,7 +14,7 @@ export default class NewClass extends cc.Component {
     this.maxValue = Data.getInstance().MaxValue
   }
   start() {
-    if (Math.abs(Data.getInstance().score) % 2) {
+    if (Data.getInstance().result) {
       this.title.string = 'Win! ' + this.maxValue + '!'
       this.score.string = String(Data.getInstance().score - 1)
     } else {
