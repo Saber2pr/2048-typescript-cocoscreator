@@ -1,12 +1,15 @@
 const { ccclass, property } = cc._decorator
 import Data from './Data'
+import Model from './Model'
 
 @ccclass
-export default class NewClass extends cc.Component {
+export default class GameEnd extends cc.Component {
   @property(cc.Label)
   score: cc.Label = null
   @property(cc.Label)
   title: cc.Label = null
+  @property(cc.Button)
+  restartBtn: cc.Button = null
 
   maxValue: number = null
 
@@ -21,5 +24,9 @@ export default class NewClass extends cc.Component {
       this.title.string = 'Over'
       this.score.string = String(Data.getInstance().score)
     }
+    this.restartBtn.node.on('click', () => {
+      Model.getInstance().returnPreLayout(this.node)
+      cc.director.loadScene('PlayScene')
+    })
   }
 }

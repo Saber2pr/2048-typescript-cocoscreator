@@ -2,11 +2,12 @@
  * @Author: AK-12
  * @Date: 2018-11-02 13:06:00
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-07 17:43:01
+ * @Last Modified time: 2018-11-07 23:56:33
  */
 import TouchFront from './ITouchFront'
 import Layout from './ILayout'
 import Data from './Data'
+import Model from './Model'
 /**
  *建立触摸与block之间关系
  *
@@ -128,10 +129,12 @@ export default class TouchBlock {
    * @private
    * @memberof TouchBlock
    */
-  private gameEnd = (speed: number = 0.2): void => {
-    // 等待节点动作完成
-    setTimeout(() => {
-      cc.director.loadScene('EndScene')
-    }, speed * 1100)
+  private gameEnd = (): void => {
+    this._score.string = String(this.DataStn.score - 1)
+    let end = Model.getInstance().getPreLayout()
+    if (end !== null) {
+      end.setParent(cc.director.getScene())
+      end.setPosition(cc.winSize.width / 2, cc.winSize.height / 2)
+    }
   }
 }

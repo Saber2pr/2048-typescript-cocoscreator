@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-01 12:51:23
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-07 17:41:16
+ * @Last Modified time: 2018-11-07 23:57:06
  */
 const { ccclass, property } = cc._decorator
 import TouchBlock from './TouchBlock'
@@ -20,12 +20,16 @@ export default class PlayScene extends cc.Component {
   layout: cc.Sprite = null
   @property(cc.Prefab)
   blockPrefab: cc.Prefab = null
+  @property(cc.Prefab)
+  gameEnd: cc.Prefab = null
   @property(cc.Label)
   score: cc.Label = null
 
   onLoad() {
     // init prefab cache
-    Model.getInstance().initPool(this.blockPrefab, 16)
+    Model.getInstance()
+      .initPool(this.blockPrefab, 16)
+      .initPreLayout(this.gameEnd)
     //init Data
     Data.getInstance()
       .init(4, 2048)
