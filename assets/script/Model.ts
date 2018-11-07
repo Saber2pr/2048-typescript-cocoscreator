@@ -2,18 +2,12 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 13:06:11 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 20:00:35
+ * @Last Modified time: 2018-11-07 17:41:37
  */
 /**
- * 获取单例
- * @function getInstance
- * ***
- * 加载prefab缓存
- * @function initPool
- * ***
- * 获取cc.NodePool对象
- * @param BlockPool cc.NodePool
- * ***
+ *对象池管理
+ *
+ * 单例类
  * @export
  * @class Model
  */
@@ -97,13 +91,5 @@ export default class Model {
   public ClearPool(): void {
     this._nodeList = []
     this._BlockPool.clear()
-  }
-  /**
-   *输出调试信息
-   *
-   * @memberof Model
-   */
-  public log(): void {
-    console.log(this._BlockPool.size())
   }
 }

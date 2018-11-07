@@ -2,12 +2,13 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 13:31:42 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-03 19:25:20
+ * @Last Modified time: 2018-11-07 17:38:31
  */
 import ITouchFront from './ITouchFront'
 /**
  *触摸方向执行对应回调
  *
+ * 接口类
  * @export
  * @class TouchFront
  * @implements {ITouchFront}

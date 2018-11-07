@@ -2,20 +2,17 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 12:51:23 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-06 16:57:09
+ * @Last Modified time: 2018-11-07 17:41:16
  */
 const { ccclass, property } = cc._decorator
-import TouchFront from './TouchFront'
 import TouchBlock from './TouchBlock'
+import TouchFront from './TouchFront'
 import Layout from './Layout'
 import Model from './Model'
 import Data from './Data'
-import { fillArraySuper } from './MathVec'
 
 @ccclass
 export default class PlayScene extends cc.Component {
-  // LIFE-CYCLE CALLBACKS:
-
   @property(cc.Sprite)
   background: cc.Sprite = null
   @property(cc.Sprite)
@@ -35,20 +32,17 @@ export default class PlayScene extends cc.Component {
   }
 
   start() {
-    // controller
+    // view
     let layout = new Layout(this.layout.node)
     layout
       .initEdge({
         width: {
           start: -150,
           end: 150
-        },
-        height: {
-          start: -150,
-          end: 150
         }
       })
       .draw(Data.getInstance().data)
+    // controller
     new TouchBlock(
       new TouchFront(this.background.node),
       layout,
@@ -57,6 +51,7 @@ export default class PlayScene extends cc.Component {
   }
 
   onDestroy(): void {
+    // remove cache
     Model.getInstance().ClearPool()
   }
 }

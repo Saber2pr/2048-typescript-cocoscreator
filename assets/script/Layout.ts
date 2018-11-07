@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-01 20:07:29 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-06 17:58:40
+ * @Last Modified time: 2018-11-07 17:39:05
  */
 import ILayout from './ILayout'
 import Model from './Model'
@@ -10,17 +10,52 @@ import { visitArray } from './MathVec'
 /**
  *Block节点视图的逻辑
  *
+ * 接口类
  * @export
  * @class Layout
  * @implements {ILayout}
  */
 export default class Layout implements ILayout {
+  /**
+   *layout根节点
+   *
+   * @private
+   * @type {cc.Node}
+   * @memberof Layout
+   */
   private background: cc.Node
+  /**
+   *锚点方形边界
+   *
+   * @private
+   * @type {width: { start: number; end: number }}
+   * @memberof Layout
+   */
   private edge: {
     width: { start: number; end: number }
-    height: { start: number; end: number }
   }
-  private start: cc.Vec2
+  /**
+   *锚点边界宽度
+   *
+   * @private
+   * @type {number}
+   * @memberof Layout
+   */
+  private width: number
+  /**
+   *边界原点
+   *
+   * @private
+   * @type {cc.Vec2}
+   * @memberof Layout
+   */
+  private origin: cc.Vec2
+  /**
+   *颜色组
+   *
+   * @private
+   * @memberof Layout
+   */
   private color = {
     2: cc.color(237, 241, 21, 255),
     4: cc.color(241, 180, 21, 255),
@@ -37,8 +72,6 @@ export default class Layout implements ILayout {
   /**
    *Creates an instance of Layout.
    * @param {cc.Node} background
-   * @param {number} offset
-   * @param {number} [speed=0.2]
    * @memberof Layout
    */
   constructor(background: cc.Node) {
@@ -53,26 +86,26 @@ export default class Layout implements ILayout {
    */
   public initEdge = (size: {
     width: { start: number; end: number }
-    height: { start: number; end: number }
   }): Layout => {
     this.edge = size
-    this.start = cc.v2(size.width.start, -size.height.start)
+    this.origin = cc.v2(size.width.start, -size.width.start)
+    this.width = this.edge.width.end - this.edge.width.start
     return this
   }
   /**
    *根据矩阵绘制block组
    *
    * @param {number[][]} data 矩阵数据
-   * @param {number} [step=100] 方块间隔
    * @memberof Layout
    */
-  public draw(data: number[][], step: number = 100): void {
+  public draw(data: number[][]): void {
+    let step = this.width / (data.length - 1)
     Model.getInstance().clearNodeList()
     // 遍历block组
     visitArray(data, (raw, col) => {
       if (data[raw][col] !== 0) {
         // 映射锚点位置
-        let pos = cc.v2(this.start.x + step * col, this.start.y - step * raw)
+        let pos = cc.v2(this.origin.x + step * col, this.origin.y - step * raw)
         // 取对象池节点
         let block = Model.getInstance().getBlock()
         block.setParent(this.background)
@@ -107,19 +140,6 @@ export default class Layout implements ILayout {
         node.runAction(this.getAction(command, delta[raw][col] * 100, speed))
       }
     })
-  }
-  /**
-   *调度节点动作
-   *
-   * @private
-   * @param {number} dt
-   * @param {cc.Node} node
-   * @memberof Layout
-   */
-  private runAction(dt: number, node: cc.Node) {
-    new cc.Component().schedule(() => {
-      node.position
-    }, dt)
   }
   /**
    *获取方向偏移动作
@@ -177,13 +197,5 @@ export default class Layout implements ILayout {
     pos: { raw: number; col: number }
   ): cc.Node {
     return parent.getChildByName(String(pos.raw + '' + pos.col))
-  }
-  /**
-   *打印调试信息
-   *
-   * @memberof Layout
-   */
-  public log(): void {
-    cc.log('nodelist:', Model.getInstance().NodeList.length)
   }
 }

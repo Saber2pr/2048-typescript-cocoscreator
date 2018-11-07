@@ -2,22 +2,57 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 13:06:00 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-06 17:55:58
+ * @Last Modified time: 2018-11-07 17:36:19
  */
 import TouchFront from './ITouchFront'
 import Layout from './ILayout'
 import Data from './Data'
 /**
  *建立触摸与block之间关系
-//  *
+ *
  * @export
  * @class TouchBlock
  */
 export default class TouchBlock {
+  /**
+   *触摸手势api
+   *
+   * @private
+   * @type {TouchFront}
+   * @memberof TouchBlock
+   */
   private touchFront: TouchFront
+  /**
+   *layout绘图api
+   *
+   * @private
+   * @type {Layout}
+   * @memberof TouchBlock
+   */
   private layout: Layout
+  /**
+   *矩阵api
+   *
+   * @private
+   * @type {Data}
+   * @memberof TouchBlock
+   */
   private DataStn: Data
+  /**
+   *场景score组件label
+   *
+   * @private
+   * @type {cc.Label}
+   * @memberof TouchBlock
+   */
   private _score: cc.Label
+  /**
+   *Creates an instance of TouchBlock.
+   * @param {TouchFront} touchFront
+   * @param {Layout} layout
+   * @param {cc.Label} score
+   * @memberof TouchBlock
+   */
   constructor(touchFront: TouchFront, layout: Layout, score: cc.Label) {
     this.touchFront = touchFront
     this.layout = layout
@@ -33,6 +68,14 @@ export default class TouchBlock {
     // 触摸手势回调
     this.touchFront.submit(this.left, this.right, this.up, this.down).listen()
   }
+  /**
+   *layout绘图引擎
+   *
+   * @private
+   * @param {string} command
+   * @param {number} [speed=0.2]
+   * @memberof TouchBlock
+   */
   private layoutStep(command: string, speed: number = 0.2): void {
     let delta = this.DataStn.merge(command)
     cc.log(delta)
@@ -46,6 +89,12 @@ export default class TouchBlock {
     }
     this.testResult()
   }
+  /**
+   *绘图任务
+   *
+   * @private
+   * @memberof TouchBlock
+   */
   private left = (): void => {
     this.layoutStep('left')
   }

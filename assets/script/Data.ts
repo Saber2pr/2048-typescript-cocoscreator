@@ -2,7 +2,7 @@
  * @Author: AK-12 
  * @Date: 2018-11-02 17:06:17 
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-06 17:42:54
+ * @Last Modified time: 2018-11-07 17:39:30
  */
 import {
   transformArray,
@@ -36,6 +36,7 @@ interface MapAndDelta {
 /**
  *矩阵合并算法
  *
+ * 单例类
  * @export
  * @class Data
  */
