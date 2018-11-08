@@ -131,11 +131,13 @@ export default class TouchBlock {
    * @private
    * @memberof TouchBlock
    */
-  private gameEnd = (): void => {
-    let end = Model.getInstance().getPreLayout()
-    if (end !== null) {
-      end.setParent(cc.director.getScene())
-      end.setPosition(cc.winSize.width / 2, cc.winSize.height / 2)
-    }
+  private gameEnd = (speed: number = 0.2): void => {
+    setTimeout(() => {
+      let end = Model.getInstance().getPreLayout()
+      if (end !== null) {
+        end.setParent(cc.director.getScene())
+        end.setPosition(cc.winSize.width / 2, cc.winSize.height / 2)
+      }
+    }, speed * 1100)
   }
 }
