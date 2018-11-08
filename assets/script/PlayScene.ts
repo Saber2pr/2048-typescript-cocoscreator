@@ -32,7 +32,7 @@ export default class PlayScene extends cc.Component {
       .initPreLayout(this.gameEnd)
     //init Data
     Data.getInstance()
-      .init(4, 2048)
+      .init(4, 8)
       .addRand(2)
   }
 

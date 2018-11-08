@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-02 13:06:00
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-07 23:56:33
+ * @Last Modified time: 2018-11-08 12:26:28
  */
 import TouchFront from './ITouchFront'
 import Layout from './ILayout'
@@ -117,8 +117,10 @@ export default class TouchBlock {
     this._score.string = String(this.DataStn.score)
     if (this.DataStn.result) {
       this.gameEnd()
+      this._score.string = String(this.DataStn.score - 1)
     } else if (this.DataStn.isFull) {
       if (!this.DataStn.hasTwice) {
+        this._score.string = String(this.DataStn.score)
         this.gameEnd()
       }
     }
@@ -130,7 +132,6 @@ export default class TouchBlock {
    * @memberof TouchBlock
    */
   private gameEnd = (): void => {
-    this._score.string = String(this.DataStn.score - 1)
     let end = Model.getInstance().getPreLayout()
     if (end !== null) {
       end.setParent(cc.director.getScene())
