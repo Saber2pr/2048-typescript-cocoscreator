@@ -1,8 +1,8 @@
 /*
- * @Author: AK-12 
- * @Date: 2018-11-01 20:07:29 
+ * @Author: AK-12
+ * @Date: 2018-11-01 20:07:29
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-07 17:39:05
+ * @Last Modified time: 2018-11-08 22:43:18
  */
 import ILayout from './ILayout'
 import Model from './Model'
@@ -127,17 +127,25 @@ export default class Layout implements ILayout {
    *
    * @param {string} command
    * @param {number[][]} delta
+   * @param {Function} callback 结束回调
    * @param {number} [speed]
    * @memberof Layout
    */
-  public action(command: string, delta: number[][], speed?: number): void {
+  public action(
+    command: string,
+    delta: number[][],
+    callback: Function,
+    speed?: number
+  ): void {
     visitArray(delta, (raw, col) => {
       if (delta[raw][col] !== 0) {
         let node = this.getNodeByTarget(this.background, {
           raw: raw,
           col: col
         })
-        node.runAction(this.getAction(command, delta[raw][col] * 100, speed))
+        node
+          .RunAction(this.getAction(command, delta[raw][col] * 100, speed))
+          .onStoped(callback)
       }
     })
   }
@@ -155,16 +163,16 @@ export default class Layout implements ILayout {
     command: string,
     delta: number,
     speed: number = 0.5
-  ): cc.Action {
+  ): ezaction.HActionTweenBy {
     switch (command) {
       case 'left':
-        return cc.moveBy(speed, cc.v2(-delta, 0))
+        return ezaction.moveBy(speed, cc.v2(-delta, 0))
       case 'right':
-        return cc.moveBy(speed, cc.v2(delta, 0))
+        return ezaction.moveBy(speed, cc.v2(delta, 0))
       case 'up':
-        return cc.moveBy(speed, cc.v2(0, delta))
+        return ezaction.moveBy(speed, cc.v2(0, delta))
       case 'down':
-        return cc.moveBy(speed, cc.v2(0, -delta))
+        return ezaction.moveBy(speed, cc.v2(0, -delta))
       default:
         throw new Error('action command error')
     }

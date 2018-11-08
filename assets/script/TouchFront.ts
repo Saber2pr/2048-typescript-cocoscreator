@@ -1,6 +1,6 @@
 /*
- * @Author: AK-12 
- * @Date: 2018-11-01 13:31:42 
+ * @Author: AK-12
+ * @Date: 2018-11-01 13:31:42
  * @Last Modified by: AK-12
  * @Last Modified time: 2018-11-07 17:38:31
  */
@@ -37,11 +37,6 @@ export default class TouchFront implements ITouchFront {
     this._lock = 0
     this.delta = delta
   }
-  /**
-   *注册手势回调
-   *
-   * @memberof TouchFront
-   */
   public submit = (
     callbackLeft?: Function,
     callbackRight?: Function,

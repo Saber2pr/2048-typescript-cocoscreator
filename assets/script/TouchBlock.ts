@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-02 13:06:00
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-08 12:26:28
+ * @Last Modified time: 2018-11-08 22:40:34
  */
 import TouchFront from './ITouchFront'
 import Layout from './ILayout'
@@ -79,11 +79,14 @@ export default class TouchBlock {
    */
   private layoutStep(command: string, speed: number = 0.2): void {
     let delta = this.DataStn.merge(command)
-    this.layout.action(command, delta, speed)
-    // 等待节点动作完成
-    setTimeout(() => {
-      this.layout.draw(this.DataStn.data)
-    }, speed * 1100)
+    this.layout.action(
+      command,
+      delta,
+      () => {
+        this.layout.draw(this.DataStn.data)
+      },
+      speed
+    )
     if (this.DataStn.isChanged) {
       this.DataStn.addRand()
     }
