@@ -1,9 +1,10 @@
 const { ccclass, property } = cc._decorator
 import Data from './Data'
 import Model from './Model'
+import CameraManager from './CameraManager'
 
 @ccclass
-export default class GameEnd extends cc.Component {
+export default class EndLayer extends cc.Component {
   @property(cc.Label)
   score: cc.Label = null
   @property(cc.Label)
@@ -26,7 +27,7 @@ export default class GameEnd extends cc.Component {
     }
     this.restartBtn.node.on('click', () => {
       Model.getInstance().returnPreLayout(this.node)
-      cc.director.loadScene('PlayScene')
+      CameraManager.getInstance().reload(1)
     })
   }
 }

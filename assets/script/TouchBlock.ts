@@ -2,12 +2,13 @@
  * @Author: AK-12
  * @Date: 2018-11-02 13:06:00
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-08 22:40:34
+ * @Last Modified time: 2018-11-09 13:36:11
  */
 import TouchFront from './ITouchFront'
 import Layout from './ILayout'
 import Data from './Data'
 import Model from './Model'
+import CameraManager from './CameraManager'
 /**
  *建立触摸与block之间关系
  *
@@ -134,11 +135,10 @@ export default class TouchBlock {
    * @private
    * @memberof TouchBlock
    */
-  private gameEnd = (speed: number = 0.2): void => {
+  private gameEnd = (): void => {
     let end = Model.getInstance().getPreLayout()
     if (end !== null) {
-      end.setParent(cc.director.getScene())
-      end.setPosition(cc.winSize.width / 2, cc.winSize.height / 2)
+      end.setParent(CameraManager.getInstance().CurrentLayer)
     }
   }
 }

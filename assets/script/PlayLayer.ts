@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-01 12:51:23
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-07 23:57:06
+ * @Last Modified time: 2018-11-09 14:12:13
  */
 const { ccclass, property } = cc._decorator
 import TouchBlock from './TouchBlock'
@@ -10,10 +10,10 @@ import TouchFront from './TouchFront'
 import Layout from './Layout'
 import Model from './Model'
 import Data from './Data'
-import { hasTwiceSuper } from './MathVec'
+import CameraManager from './CameraManager'
 
 @ccclass
-export default class PlayScene extends cc.Component {
+export default class PlayLayer extends cc.Component {
   @property(cc.Sprite)
   background: cc.Sprite = null
   @property(cc.Sprite)
@@ -24,6 +24,8 @@ export default class PlayScene extends cc.Component {
   gameEnd: cc.Prefab = null
   @property(cc.Label)
   score: cc.Label = null
+  @property(cc.Button)
+  backBtn: cc.Button = null
 
   onLoad() {
     // init prefab cache
@@ -38,6 +40,9 @@ export default class PlayScene extends cc.Component {
 
   start() {
     // view
+    this.backBtn.node.on('click', () => {
+      CameraManager.getInstance().reload(-1)
+    })
     let layout = new Layout(this.layout.node)
     layout
       .initEdge({
