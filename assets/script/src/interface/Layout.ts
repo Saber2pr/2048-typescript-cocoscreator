@@ -2,10 +2,10 @@
  * @Author: AK-12
  * @Date: 2018-11-01 20:07:29
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-09 14:00:33
+ * @Last Modified time: 2018-11-09 17:12:23
  */
 import ILayout from './ILayout'
-import Model from './Model'
+import Model from '../singletons/Model'
 import { visitArray } from './MathVec'
 /**
  *Block节点视图的逻辑

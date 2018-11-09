@@ -1,3 +1,9 @@
+/*
+ * @Author: AK-12
+ * @Date: 2018-11-09 17:11:47
+ * @Last Modified by:   AK-12
+ * @Last Modified time: 2018-11-09 17:11:47
+ */
 export default interface ITouchFront {
   /**
    *触摸方向执行对应回调

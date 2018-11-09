@@ -1,3 +1,9 @@
+/*
+ * @Author: AK-12
+ * @Date: 2018-11-09 17:11:23
+ * @Last Modified by:   AK-12
+ * @Last Modified time: 2018-11-09 17:11:23
+ */
 const { ccclass, property } = cc._decorator
 import Data from './src/singletons/Data'
 import Model from './src/singletons/Model'
