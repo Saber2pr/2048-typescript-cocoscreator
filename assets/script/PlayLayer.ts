@@ -35,7 +35,7 @@ export default class PlayLayer extends cc.Component {
       .initPreLayout(this.gameEnd)
     //init Data
     Data.getInstance()
-      .init(4, 8)
+      .init(4, 2048)
       .addRand(2)
   }
 
