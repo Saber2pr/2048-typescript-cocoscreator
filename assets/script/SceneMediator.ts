@@ -71,4 +71,15 @@ export default class SceneMediator {
       !!callback ? setTimeout(callback, scaleTospeed * 1000) : null
     })
   }
+  /**
+   *重载layer
+   *
+   * @memberof SceneMediator
+   */
+  reload() {
+    let scale = cc.Canvas.instance.node.scale
+    CameraManager.getInstance().reload(1, () => {
+      cc.Canvas.instance.node.scale = scale
+    })
+  }
 }

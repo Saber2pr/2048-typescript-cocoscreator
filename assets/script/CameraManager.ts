@@ -101,6 +101,16 @@ export default class CameraManager {
     return this._camera.getComponent(cc.Camera)
   }
   /**
+   *摄像机所在场景名字
+   *
+   * @readonly
+   * @type {string}
+   * @memberof CameraManager
+   */
+  get sceneName(): string {
+    return this.scene.name
+  }
+  /**
    *更新摄像机注视位置
    *
    * @private
@@ -176,11 +186,13 @@ export default class CameraManager {
    * @param 1: 前进
    *
    * @param {number} value
+   * @param {Function} callback
    * @memberof CameraManager
    */
-  public reload(value: number): void {
+  public reload(value: number, callback?: Function): void {
     cc.director.loadScene(this.scene.name, () => {
       this.go(value)
+      !!callback ? callback() : null
     })
   }
 }

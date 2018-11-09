@@ -7,7 +7,7 @@
 const { ccclass, property } = cc._decorator
 import Data from './Data'
 import Model from './Model'
-import CameraManager from './CameraManager'
+import SceneMediator from './SceneMediator'
 
 @ccclass
 export default class EndLayer extends cc.Component {
@@ -33,7 +33,7 @@ export default class EndLayer extends cc.Component {
     }
     this.restartBtn.node.on('click', () => {
       Model.getInstance().returnPreLayout(this.node)
-      CameraManager.getInstance().reload(1)
+      SceneMediator.getInstance().reload()
     })
   }
 }
