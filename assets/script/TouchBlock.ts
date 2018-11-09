@@ -4,11 +4,11 @@
  * @Last Modified by: AK-12
  * @Last Modified time: 2018-11-09 16:51:09
  */
-import TouchFront from './interface/ITouchFront'
-import Layout from './interface/ILayout'
-import Data from './singletons/Data'
-import Model from './singletons/Model'
-import CameraManager from './singletons/CameraManager'
+import TouchFront from './ITouchFront'
+import Layout from './ILayout'
+import Data from './Data'
+import Model from './Model'
+import CameraManager from './CameraManager'
 /**
  *建立触摸与block之间关系
  *

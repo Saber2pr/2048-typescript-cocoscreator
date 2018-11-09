@@ -5,7 +5,7 @@
  * @Last Modified time: 2018-11-09 20:53:39
  */
 const { ccclass, property } = cc._decorator
-import SceneMediator from './src/singletons/SceneMediator'
+import SceneMediator from './SceneMediator'
 
 @ccclass
 export default class StartLayer extends cc.Component {
