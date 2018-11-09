@@ -14,7 +14,7 @@ import {
   fillArraySuper,
   fillArray,
   hasTwiceSuper
-} from './MathVec'
+} from '../interface/MathVec'
 /**
  *一维数组与合并偏差
  *

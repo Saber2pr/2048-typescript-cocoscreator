@@ -5,7 +5,7 @@
  * @Last Modified time: 2018-11-09 17:12:23
  */
 import ILayout from './ILayout'
-import Model from './Model'
+import Model from '../singletons/Model'
 import { visitArray } from './MathVec'
 /**
  *Block节点视图的逻辑
