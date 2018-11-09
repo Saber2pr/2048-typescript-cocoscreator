@@ -1,5 +1,5 @@
 const { ccclass, property } = cc._decorator
-import CameraManager from './CameraManager'
+import CameraManager from './src/singletons/CameraManager'
 
 @ccclass
 export default class NewClass extends cc.Component {

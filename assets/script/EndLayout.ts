@@ -1,7 +1,7 @@
 const { ccclass, property } = cc._decorator
-import Data from './Data'
-import Model from './Model'
-import CameraManager from './CameraManager'
+import Data from './src/singletons/Data'
+import Model from './src/singletons/Model'
+import CameraManager from './src/singletons/CameraManager'
 
 @ccclass
 export default class EndLayer extends cc.Component {
