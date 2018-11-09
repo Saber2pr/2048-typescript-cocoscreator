@@ -28,11 +28,12 @@ export default class Layout implements ILayout {
    *锚点方形边界
    *
    * @private
-   * @type {width: { start: number; end: number }}
+   * @type {{width: { start: number; end: number } height: { start: number; end: number } }}
    * @memberof Layout
    */
   private edge: {
     width: { start: number; end: number }
+    height: { start: number; end: number }
   }
   /**
    *锚点边界宽度
@@ -42,6 +43,14 @@ export default class Layout implements ILayout {
    * @memberof Layout
    */
   private width: number
+  /**
+   *锚点边界高度
+   *
+   * @private
+   * @type {number}
+   * @memberof Layout
+   */
+  private height: number
   /**
    *边界原点
    *
@@ -86,10 +95,12 @@ export default class Layout implements ILayout {
    */
   public initEdge = (size: {
     width: { start: number; end: number }
+    height: { start: number; end: number }
   }): Layout => {
     this.edge = size
     this.origin = cc.v2(size.width.start, -size.width.start)
     this.width = this.edge.width.end - this.edge.width.start
+    this.height = this.edge.height.end - this.edge.height.start
     return this
   }
   /**
@@ -99,13 +110,17 @@ export default class Layout implements ILayout {
    * @memberof Layout
    */
   public draw(data: number[][]): void {
-    let step = this.width / (data.length - 1)
+    let stepX = this.width / (data[0].length - 1)
+    let stepY = this.height / (data.length - 1)
     Model.getInstance().clearNodeList()
     // 遍历block组
     visitArray(data, (raw, col) => {
       if (data[raw][col] !== 0) {
         // 映射锚点位置
-        let pos = cc.v2(this.origin.x + step * col, this.origin.y - step * raw)
+        let pos = cc.v2(
+          this.origin.x + stepX * col,
+          this.origin.y - stepY * raw
+        )
         // 取对象池节点
         let block = Model.getInstance().getBlock()
         block.setParent(this.background)

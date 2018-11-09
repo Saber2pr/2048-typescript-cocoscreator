@@ -52,6 +52,10 @@ export default class PlayLayer extends cc.Component {
         width: {
           start: -150,
           end: 150
+        },
+        height: {
+          start: -150,
+          end: 150
         }
       })
       .draw(Data.getInstance().data)
