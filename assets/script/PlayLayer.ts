@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-01 12:51:23
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-09 14:12:13
+ * @Last Modified time: 2018-11-09 16:02:48
  */
 const { ccclass, property } = cc._decorator
 import TouchBlock from './TouchBlock'
@@ -11,6 +11,7 @@ import Layout from './Layout'
 import Model from './Model'
 import Data from './Data'
 import CameraManager from './CameraManager'
+import SceneMediator from './SceneMediator'
 
 @ccclass
 export default class PlayLayer extends cc.Component {
@@ -41,7 +42,9 @@ export default class PlayLayer extends cc.Component {
   start() {
     // view
     this.backBtn.node.on('click', () => {
-      CameraManager.getInstance().reload(-1)
+      SceneMediator.getInstance().backto(1, () => {
+        CameraManager.getInstance().reload(0)
+      })
     })
     let layout = new Layout(this.layout.node)
     layout
