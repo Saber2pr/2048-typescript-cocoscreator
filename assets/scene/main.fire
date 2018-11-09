@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.17936274875775834,
-      "y": 0.17936274875775834,
+      "x": 0.6787500000000001,
+      "y": 0.6787500000000001,
       "z": 1
     },
     "_quat": {
@@ -55,7 +55,7 @@
     "_zIndex": 0,
     "groupIndex": 0,
     "autoReleaseAssets": false,
-    "_id": "f24ddf68-0c90-4744-8299-10d2b32caf2f"
+    "_id": "4e03d127-8535-47c2-895c-e46afd9a437f"
   },
   {
     "__type__": "cc.Node",
@@ -215,7 +215,7 @@
     "_id": "53EXievxlCsrBpodMW8u29"
   },
   {
-    "__type__": "c4806RgT4tNqKsH6In2Zmy0",
+    "__type__": "f34f0T5UXtExJ5Ytcn4ZQdv",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -231,9 +231,9 @@
       }
     ],
     "scene": {
-      "__uuid__": "f24ddf68-0c90-4744-8299-10d2b32caf2f"
+      "__uuid__": "4e03d127-8535-47c2-895c-e46afd9a437f"
     },
-    "_id": "4eFyLkUHVLuYda+FzuTjCv"
+    "_id": "68QRxouO1KLrPjtcns+L6J"
   },
   {
     "__type__": "cc.Node",
@@ -818,7 +818,7 @@
     "_id": "50xFPQwi1KOaCcIWEpnxx+"
   },
   {
-    "__type__": "f6ca1p7CgZMMafmM5vGnQwk",
+    "__type__": "de82c+cpMlP24+Pofcvt7Me",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -828,7 +828,7 @@
     "startBtn": {
       "__id__": 17
     },
-    "_id": "94buUTYBFL8ZRNJDLRg+ZK"
+    "_id": "f8yaW3nsVGsYYgdhs5vgCM"
   },
   {
     "__type__": "cc.Node",
@@ -1567,7 +1567,7 @@
     "_id": "d8Bcw1LdVE/YI7KSQ5bipD"
   },
   {
-    "__type__": "e9c8bH5ZM1BD4/aKPa9BMFF",
+    "__type__": "6da04JjlNVHKr2BHpKtrKVk",
     "_name": "",
     "_objFlags": 0,
     "node": {
@@ -1581,10 +1581,10 @@
       "__id__": 22
     },
     "blockPrefab": {
-      "__uuid__": "605c7dc6-9d2a-4b28-a2ad-fb32840db153"
+      "__uuid__": "d3a940c4-4ccc-4c5a-868c-c67740afd58e"
     },
     "gameEnd": {
-      "__uuid__": "e980c70a-387c-4b54-b89b-546bca21eaae"
+      "__uuid__": "947dd3a3-13be-47c6-b7fc-799247504437"
     },
     "score": {
       "__id__": 27
@@ -1592,7 +1592,7 @@
     "backBtn": {
       "__id__": 33
     },
-    "_id": "00rijkaVFKB6L/iMAk9pco"
+    "_id": "39tFj3LP1LG7vaUAECi8qf"
   },
   {
     "__type__": "cc.Canvas",
