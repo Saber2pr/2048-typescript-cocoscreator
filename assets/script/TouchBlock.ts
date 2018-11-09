@@ -84,13 +84,13 @@ export default class TouchBlock {
       delta,
       () => {
         this.layout.draw(this.DataStn.data)
+        this.testResult()
       },
       speed
     )
     if (this.DataStn.isChanged) {
       this.DataStn.addRand()
     }
-    this.testResult()
   }
   /**
    *绘图任务
@@ -135,12 +135,10 @@ export default class TouchBlock {
    * @memberof TouchBlock
    */
   private gameEnd = (speed: number = 0.2): void => {
-    setTimeout(() => {
-      let end = Model.getInstance().getPreLayout()
-      if (end !== null) {
-        end.setParent(cc.director.getScene())
-        end.setPosition(cc.winSize.width / 2, cc.winSize.height / 2)
-      }
-    }, speed * 1100)
+    let end = Model.getInstance().getPreLayout()
+    if (end !== null) {
+      end.setParent(cc.director.getScene())
+      end.setPosition(cc.winSize.width / 2, cc.winSize.height / 2)
+    }
   }
 }
