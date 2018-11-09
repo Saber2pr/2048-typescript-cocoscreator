@@ -21,6 +21,14 @@ export default class CameraManager {
    */
   private _camera: cc.Node = null
   /**
+   *摄像机所在场景资源
+   *
+   * @private
+   * @type {cc.SceneAsset}
+   * @memberof CameraManager
+   */
+  private scene: cc.SceneAsset
+  /**
    *顺序节点列表
    *
    * @private
@@ -109,13 +117,19 @@ export default class CameraManager {
    *
    * @param {cc.Node} _camera
    * @param {Array<cc.Node>} layerList
+   * @param {cc.SceneAsset} scene
    * @memberof CameraManager
    */
-  public initCamera(_camera: cc.Node, layerList: Array<cc.Node>) {
+  public initCamera(
+    _camera: cc.Node,
+    layerList: Array<cc.Node>,
+    scene: cc.SceneAsset
+  ) {
     this.currentIndex = 0
     this._length = layerList.length
     this.layerList = layerList
     this._camera = _camera
+    this.scene = scene
   }
   /**
    *切换当前显示的节点，
@@ -165,7 +179,7 @@ export default class CameraManager {
    * @memberof CameraManager
    */
   public reload(value: number): void {
-    cc.director.loadScene(cc.director.getScene().name, () => {
+    cc.director.loadScene(this.scene.name, () => {
       this.go(value)
     })
   }
