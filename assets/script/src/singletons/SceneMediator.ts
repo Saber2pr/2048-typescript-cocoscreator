@@ -10,19 +10,19 @@ export default class SceneMediator {
   /**
    *延时移动
    *
-   * @param {number} value
-   * @param {number} [delay=0]
-   * @param {Function} [onStart]
-   * @param {Function} [onStoped]
-   * @param {number} [movespeed=1]
+   * @param {number} value 命令值
+   * @param {Function} [onStart] 延时前回调
+   * @param {number} [delay=0] 延时时长
+   * @param {number} [movespeed=1] move动画速度
+   * @param {Function} [onStoped] move结束回调
    * @memberof SceneMediator
    */
   go(
     value: number,
-    delay: number = 0,
     onStart?: Function,
-    onStoped?: Function,
-    movespeed: number = 1
+    delay: number = 0,
+    movespeed: number = 1,
+    onStoped?: Function
   ): void {
     CameraManager.getInstance().go(value, (camera, dpos) => {
       camera
@@ -32,28 +32,43 @@ export default class SceneMediator {
     })
   }
   /**
+   *layer前进
    *
-   *
-   * @param {number} [delay=1]
-   * @param {number} [scale=0.9]
+   * @param {number} [scaleTospeed=1] 缩放动画速度
+   * @param {number} [scale=0.9] 缩放动画幅度
+   * @param {number} [movespeed=1] move动画速度
    * @memberof SceneMediator
    */
-  goto(delay: number = 1, scale: number = 0.9): void {
-    this.go(1, delay, () => {
-      cc.Canvas.instance.node.runAction(cc.scaleTo(1, scale))
-    })
+  goto(
+    scaleTospeed: number = 1,
+    scale: number = 0.9,
+    movespeed: number = 1
+  ): void {
+    this.go(
+      1,
+      () => {
+        cc.Canvas.instance.node.runAction(cc.scaleTo(scaleTospeed, scale))
+      },
+      scaleTospeed,
+      movespeed
+    )
   }
   /**
+   *layer后退
    *
-   *
-   * @param {number} [speed=1] scaleTo speed
-   * @param {Function} [callback]
+   * @param {number} [scaleTospeed=1] 缩放动画速度
+   * @param {number} [movespeed=1] move动画速度
+   * @param {Function} [callback] 结束回调
    * @memberof SceneMediator
    */
-  backto(speed: number = 1, callback?: Function): void {
-    this.go(-1, 0, undefined, () => {
-      cc.Canvas.instance.node.runAction(cc.scaleTo(speed, 1))
-      !!callback ? setTimeout(callback, speed * 1000) : null
+  backto(
+    scaleTospeed: number = 1,
+    movespeed: number = 1,
+    callback?: Function
+  ): void {
+    this.go(-1, undefined, 0, movespeed, () => {
+      cc.Canvas.instance.node.runAction(cc.scaleTo(scaleTospeed, 1))
+      !!callback ? setTimeout(callback, scaleTospeed * 1000) : null
     })
   }
 }

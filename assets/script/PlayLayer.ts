@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-01 12:51:23
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-09 16:02:48
+ * @Last Modified time: 2018-11-09 20:53:56
  */
 const { ccclass, property } = cc._decorator
 import TouchBlock from './src/TouchBlock'
@@ -42,7 +42,7 @@ export default class PlayLayer extends cc.Component {
   start() {
     // view
     this.backBtn.node.on('click', () => {
-      SceneMediator.getInstance().backto(1, () => {
+      SceneMediator.getInstance().backto(0.7, 0.4, () => {
         CameraManager.getInstance().reload(0)
       })
     })
