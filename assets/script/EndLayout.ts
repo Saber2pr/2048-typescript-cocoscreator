@@ -1,13 +1,13 @@
 /*
  * @Author: AK-12
  * @Date: 2018-11-09 17:11:23
- * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-09 22:00:57
+ * @Last Modified by:   AK-12
+ * @Last Modified time: 2018-11-09 17:11:23
  */
 const { ccclass, property } = cc._decorator
-import Data from '../lib/singletons/Data'
-import Model from '../lib/singletons/Model'
-import CameraManager from '../lib/singletons/CameraManager'
+import Data from './Data'
+import Model from './Model'
+import CameraManager from './CameraManager'
 
 @ccclass
 export default class EndLayer extends cc.Component {

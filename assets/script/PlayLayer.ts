@@ -2,16 +2,16 @@
  * @Author: AK-12
  * @Date: 2018-11-01 12:51:23
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-09 22:00:50
+ * @Last Modified time: 2018-11-09 20:53:56
  */
 const { ccclass, property } = cc._decorator
-import TouchBlock from '../lib/TouchBlock'
-import TouchFront from '../lib/interface/TouchFront'
-import Layout from '../lib/interface/Layout'
-import Model from '../lib/singletons/Model'
+import TouchBlock from './TouchBlock'
+import TouchFront from './TouchFront'
+import Layout from './Layout'
+import Model from './Model'
 import Data from './Data'
-import CameraManager from '../lib/singletons/CameraManager'
-import SceneMediator from '../lib/singletons/SceneMediator'
+import CameraManager from './CameraManager'
+import SceneMediator from './SceneMediator'
 
 @ccclass
 export default class PlayLayer extends cc.Component {
