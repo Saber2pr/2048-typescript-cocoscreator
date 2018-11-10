@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-01 20:07:29
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-10 10:03:47
+ * @Last Modified time: 2018-11-10 15:08:48
  */
 import ILayout from './ILayout'
 import Model from './Model'
@@ -153,6 +153,8 @@ export default class Layout implements ILayout {
     speed?: number
   ): void {
     visitArray(delta, (raw, col) => {
+      let stepX = this.width / (delta[0].length - 1)
+      let stepY = this.height / (delta.length - 1)
       if (delta[raw][col] !== 0) {
         let node = this.getNodeByTarget(this.background, {
           raw: raw,
@@ -160,9 +162,14 @@ export default class Layout implements ILayout {
         })
         node
           .RunAction(
-            this.getAction(command, delta[raw][col] * 100, speed).easing(
-              ezaction.ease.cubicEaseOut(1)
-            )
+            this.getAction(
+              command,
+              {
+                deltaX: delta[raw][col] * stepX,
+                deltaY: delta[raw][col] * stepY
+              },
+              speed
+            ).easing(ezaction.ease.cubicEaseOut(1))
           )
           .onStoped(callback)
       }
@@ -180,18 +187,18 @@ export default class Layout implements ILayout {
    */
   private getAction(
     command: string,
-    delta: number,
+    delta: { deltaX: number; deltaY: number },
     speed: number = 0.5
   ): ezaction.HActionTweenBy {
     switch (command) {
       case 'left':
-        return ezaction.moveBy(speed, cc.v2(-delta, 0))
+        return ezaction.moveBy(speed, cc.v2(-delta.deltaX, 0))
       case 'right':
-        return ezaction.moveBy(speed, cc.v2(delta, 0))
+        return ezaction.moveBy(speed, cc.v2(delta.deltaX, 0))
       case 'up':
-        return ezaction.moveBy(speed, cc.v2(0, delta))
+        return ezaction.moveBy(speed, cc.v2(0, delta.deltaY))
       case 'down':
-        return ezaction.moveBy(speed, cc.v2(0, -delta))
+        return ezaction.moveBy(speed, cc.v2(0, -delta.deltaY))
       default:
         throw new Error('action command error')
     }
