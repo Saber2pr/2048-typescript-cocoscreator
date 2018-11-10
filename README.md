@@ -1,5 +1,7 @@
 # 2048-typescript-cocoscreator
 
+> 动画部分采用[ezaction 动画库](https://github.com/haroel/ezaction)
+
 size: 683 KB
 
 用 typescript 写的 2048，creator 版本 2.0
@@ -12,7 +14,7 @@ size: 683 KB
  * @Author: AK-12
  * @Date: 2018-11-02 17:06:17
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-10 10:37:55
+ * @Last Modified time: 2018-11-10 12:44:08
  */
 import {
   transformArray,
