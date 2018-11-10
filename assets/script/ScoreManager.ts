@@ -30,12 +30,12 @@ export default class ScoreManager implements IScoreManager {
       .RunAction(this.action())
       .onStart(() => {
         this.score.node.children[0].opacity = 255
+        this.score.node.children[0].getComponent(cc.Label).string =
+          '+' + String(score)
       })
       .onStoped(() => {
         this.score.node.children[0].setPosition(this.p_ori)
         this.score.node.children[0].opacity = 0
-        this.score.node.children[0].getComponent(cc.Label).string =
-          '+' + String(score)
       })
   }
 
