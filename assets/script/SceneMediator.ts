@@ -1,11 +1,17 @@
 /*
  * @Author: AK-12
  * @Date: 2018-11-10 12:36:21
- * @Last Modified by:   AK-12
- * @Last Modified time: 2018-11-10 12:36:21
+ * @Last Modified by: AK-12
+ * @Last Modified time: 2018-11-10 12:38:28
  */
 import CameraManager from './CameraManager'
-
+/**
+ *场景切换动画管理
+ *
+ * 单例类
+ * @export
+ * @class SceneMediator
+ */
 export default class SceneMediator {
   private constructor() {}
   static instance: SceneMediator
