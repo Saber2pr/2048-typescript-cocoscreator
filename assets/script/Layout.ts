@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-01 20:07:29
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-09 17:12:23
+ * @Last Modified time: 2018-11-10 10:03:47
  */
 import ILayout from './ILayout'
 import Model from './Model'
@@ -159,7 +159,11 @@ export default class Layout implements ILayout {
           col: col
         })
         node
-          .RunAction(this.getAction(command, delta[raw][col] * 100, speed))
+          .RunAction(
+            this.getAction(command, delta[raw][col] * 100, speed).easing(
+              ezaction.ease.cubicEaseOut(1)
+            )
+          )
           .onStoped(callback)
       }
     })

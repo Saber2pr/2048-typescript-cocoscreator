@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-01 12:51:23
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-09 20:53:56
+ * @Last Modified time: 2018-11-10 11:31:22
  */
 const { ccclass, property } = cc._decorator
 import TouchBlock from './TouchBlock'
@@ -12,6 +12,7 @@ import Model from './Model'
 import Data from './Data'
 import CameraManager from './CameraManager'
 import SceneMediator from './SceneMediator'
+import ScoreManager from './ScoreManager'
 
 @ccclass
 export default class PlayLayer extends cc.Component {
@@ -63,7 +64,8 @@ export default class PlayLayer extends cc.Component {
     new TouchBlock(
       new TouchFront(this.background.node),
       layout,
-      this.score
+      this.score,
+      new ScoreManager(this.score)
     ).load()
   }
 

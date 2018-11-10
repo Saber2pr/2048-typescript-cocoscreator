@@ -2,10 +2,11 @@
  * @Author: AK-12
  * @Date: 2018-11-02 13:06:00
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-09 16:51:09
+ * @Last Modified time: 2018-11-10 11:21:52
  */
 import TouchFront from './ITouchFront'
 import Layout from './ILayout'
+import ScoreManager from './IScoreManager'
 import Data from './Data'
 import Model from './Model'
 import CameraManager from './CameraManager'
@@ -33,6 +34,14 @@ export default class TouchBlock {
    */
   private layout: Layout
   /**
+   *得分动画
+   *
+   * @private
+   * @type {ScoreManager}
+   * @memberof TouchBlock
+   */
+  private scoreUpdate: ScoreManager
+  /**
    *矩阵api
    *
    * @private
@@ -55,9 +64,15 @@ export default class TouchBlock {
    * @param {cc.Label} score
    * @memberof TouchBlock
    */
-  constructor(touchFront: TouchFront, layout: Layout, score: cc.Label) {
+  constructor(
+    touchFront: TouchFront,
+    layout: Layout,
+    score: cc.Label,
+    scoreManager: ScoreManager
+  ) {
     this.touchFront = touchFront
     this.layout = layout
+    this.scoreUpdate = scoreManager
     this._score = score
     this.DataStn = Data.getInstance()
   }
@@ -119,6 +134,9 @@ export default class TouchBlock {
    */
   private testResult = (): void => {
     this._score.string = String(this.DataStn.score)
+    if (this.DataStn.updateValue) {
+      this.scoreUpdate.play(this.DataStn.updateValue)
+    }
     if (this.DataStn.result) {
       this.gameEnd()
       this._score.string = String(this.DataStn.score - 1)

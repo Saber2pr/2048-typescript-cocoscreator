@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-02 17:06:17
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-07 17:39:30
+ * @Last Modified time: 2018-11-10 10:37:55
  */
 import {
   transformArray,
@@ -50,6 +50,7 @@ export default class Data {
   private map: Array<Array<number>>
   private __map: Array<Array<number>>
   private updateTimes: number
+  private __updateTimes: number
   private maxValue: number
   private hasNext: boolean
   /**
@@ -61,6 +62,7 @@ export default class Data {
    */
   public init(size: number, maxValue: number = 2048): Data {
     this.updateTimes = 0
+    this.__updateTimes = 0
     this.maxValue = maxValue
     this.map = fillArraySuper(0, {
       raw: size,
@@ -81,6 +83,16 @@ export default class Data {
    */
   get data(): number[][] {
     return this.map
+  }
+  /**
+   *得到updateTimes增量
+   *
+   * @readonly
+   * @type {number}
+   * @memberof Data
+   */
+  get updateValue(): number {
+    return this.updateTimes - this.__updateTimes
   }
   /**
    *分数
@@ -187,6 +199,7 @@ export default class Data {
   ): MapAndDelta => {
     let map: Array<Array<number>> = new Array<Array<number>>()
     let delta: Array<Array<number>> = new Array<Array<number>>()
+    this.__updateTimes = this.updateTimes
     for (var raw of arr) {
       let arrAndDelta = callback(raw)
       map.push(arrAndDelta.arr)

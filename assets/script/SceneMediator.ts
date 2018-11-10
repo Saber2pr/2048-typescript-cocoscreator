@@ -28,7 +28,12 @@ export default class SceneMediator {
       camera
         .RunAction(ezaction.moveBy(delay, cc.v2(0, 0)))
         .onStart(onStart)
-        .then(ezaction.moveTo(movespeed, dpos).onStoped(onStoped))
+        .then(
+          ezaction
+            .moveTo(movespeed, dpos)
+            .easing(ezaction.ease.easeBackOut(1))
+            .onStoped(onStoped)
+        )
     })
   }
   /**
@@ -47,7 +52,11 @@ export default class SceneMediator {
     this.go(
       1,
       () => {
-        cc.Canvas.instance.node.runAction(cc.scaleTo(scaleTospeed, scale))
+        cc.Canvas.instance.node.RunAction(
+          ezaction
+            .scaleTo(scaleTospeed, { scale: scale })
+            .easing(ezaction.ease.backEaseOut(1))
+        )
       },
       scaleTospeed,
       movespeed
@@ -67,8 +76,13 @@ export default class SceneMediator {
     callback?: Function
   ): void {
     this.go(-1, undefined, 0, movespeed, () => {
-      cc.Canvas.instance.node.runAction(cc.scaleTo(scaleTospeed, 1))
-      !!callback ? setTimeout(callback, scaleTospeed * 1000) : null
+      cc.Canvas.instance.node
+        .RunAction(
+          ezaction
+            .scaleTo(scaleTospeed, { scale: 1 })
+            .easing(ezaction.ease.backEaseOut(1))
+        )
+        .onStoped(callback)
     })
   }
   /**
