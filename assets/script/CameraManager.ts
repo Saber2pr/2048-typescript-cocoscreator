@@ -1,3 +1,9 @@
+/*
+ * @Author: AK-12
+ * @Date: 2018-11-10 12:35:49
+ * @Last Modified by:   AK-12
+ * @Last Modified time: 2018-11-10 12:35:49
+ */
 /**
  *摄像机控制
  *
