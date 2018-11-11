@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-01 12:51:23
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-10 11:31:22
+ * @Last Modified time: 2018-11-11 22:51:47
  */
 const { ccclass, property } = cc._decorator
 import TouchBlock from './TouchBlock'
@@ -10,9 +10,11 @@ import TouchFront from './TouchFront'
 import Layout from './Layout'
 import Model from './Model'
 import Data from './Data'
-import CameraManager from './CameraManager'
 import SceneMediator from './SceneMediator'
 import ScoreManager from './ScoreManager'
+import { LayoutType, Edge } from './IGame'
+import game from './Game'
+import State from './State'
 
 @ccclass
 export default class PlayLayer extends cc.Component {
@@ -26,45 +28,47 @@ export default class PlayLayer extends cc.Component {
   gameEnd: cc.Prefab = null
   @property(cc.Label)
   score: cc.Label = null
+  @property(cc.Label)
+  bestScore: cc.Label = null
   @property(cc.Button)
   backBtn: cc.Button = null
 
+  edge: Edge = null
+  layoutType: LayoutType = null
+
   onLoad() {
+    // init game type
+    ;[this.edge, this.layoutType] = [
+      game.edge,
+      game.type[State.getInstance().layoutTypeIndex]
+    ]
     // init prefab cache
     Model.getInstance()
-      .initPool(this.blockPrefab, 16)
+      .initPool(this.blockPrefab, this.layoutType.num)
       .initPreLayout(this.gameEnd)
     //init Data
     Data.getInstance()
-      .init(4, 2048)
+      .init(this.layoutType.size, 2048)
       .addRand(2)
+    this.bestScore.string = String(State.getInstance().bestScore)
   }
 
   start() {
     // view
     this.backBtn.node.on('click', () => {
-      SceneMediator.getInstance().backto(0.7, 0.4, () => {
-        CameraManager.getInstance().reload(0)
-      })
+      SceneMediator.getInstance().go(-1)
     })
     let layout = new Layout(this.layout.node)
     layout
-      .initEdge({
-        width: {
-          start: -150,
-          end: 150
-        },
-        height: {
-          start: -150,
-          end: 150
-        }
-      })
+      .initEdge(this.edge, this.layoutType.edgeScale)
+      .setBlockScale(this.layoutType.blockScale)
       .draw(Data.getInstance().data)
     // controller
     new TouchBlock(
       new TouchFront(this.background.node),
       layout,
       this.score,
+      this.bestScore,
       new ScoreManager(this.score)
     ).load()
   }

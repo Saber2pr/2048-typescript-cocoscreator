@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-01 20:07:29
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-10 15:08:48
+ * @Last Modified time: 2018-11-11 18:57:08
  */
 import ILayout from './ILayout'
 import Model from './Model'
@@ -52,6 +52,14 @@ export default class Layout implements ILayout {
    */
   private height: number
   /**
+   *方块缩放
+   *
+   * @private
+   * @type {number}
+   * @memberof Layout
+   */
+  private blockScale: number = 1
+  /**
    *边界原点
    *
    * @private
@@ -87,20 +95,32 @@ export default class Layout implements ILayout {
     this.background = background
     return this
   }
-
   /**
    *初始化边界
    *
    * @memberof Layout
    */
-  public initEdge = (size: {
-    width: { start: number; end: number }
-    height: { start: number; end: number }
-  }): Layout => {
+  public initEdge = (
+    size: {
+      width: { start: number; end: number }
+      height: { start: number; end: number }
+    },
+    scale: number = 1
+  ): Layout => {
     this.edge = size
-    this.origin = cc.v2(size.width.start, -size.width.start)
-    this.width = this.edge.width.end - this.edge.width.start
-    this.height = this.edge.height.end - this.edge.height.start
+    this.origin = cc.v2(size.width.start * scale, -size.width.start * scale)
+    this.width = (this.edge.width.end - this.edge.width.start) * scale
+    this.height = (this.edge.height.end - this.edge.height.start) * scale
+    return this
+  }
+  /**
+   *设置block缩放
+   *
+   * @param {number} scale
+   * @memberof Layout
+   */
+  public setBlockScale(scale: number): Layout {
+    this.blockScale = scale
     return this
   }
   /**
@@ -124,6 +144,7 @@ export default class Layout implements ILayout {
         // 取对象池节点
         let block = Model.getInstance().getBlock()
         block.setParent(this.background)
+        block.setScale(this.blockScale)
         block.setPosition(pos)
         this.setNodeTarget(block, {
           raw: raw,

@@ -1,8 +1,8 @@
 /*
  * @Author: AK-12
  * @Date: 2018-11-09 17:11:23
- * @Last Modified by:   AK-12
- * @Last Modified time: 2018-11-09 17:11:23
+ * @Last Modified by: AK-12
+ * @Last Modified time: 2018-11-11 22:36:36
  */
 const { ccclass, property } = cc._decorator
 import Data from './Data'
@@ -27,13 +27,22 @@ export default class EndLayer extends cc.Component {
     if (Data.getInstance().result) {
       this.title.string = 'Win! ' + this.maxValue + '!'
       this.score.string = String(Data.getInstance().score - 1)
+      this.restartBtn.node
+        .getChildByName('Label')
+        .getComponent(cc.Label).string = 'continue!'
+      this.restartBtn.node.on('click', () => {
+        Model.getInstance().returnPreLayout(this.node)
+      })
     } else {
       this.title.string = 'Over'
       this.score.string = String(Data.getInstance().score)
+      this.restartBtn.node
+        .getChildByName('Label')
+        .getComponent(cc.Label).string = 'restart'
+      this.restartBtn.node.on('click', () => {
+        Model.getInstance().returnPreLayout(this.node)
+        SceneMediator.getInstance().reload()
+      })
     }
-    this.restartBtn.node.on('click', () => {
-      Model.getInstance().returnPreLayout(this.node)
-      SceneMediator.getInstance().reload()
-    })
   }
 }

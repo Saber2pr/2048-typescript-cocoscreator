@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-02 13:06:00
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-10 11:21:52
+ * @Last Modified time: 2018-11-11 22:50:07
  */
 import TouchFront from './ITouchFront'
 import Layout from './ILayout'
@@ -10,6 +10,7 @@ import ScoreManager from './IScoreManager'
 import Data from './Data'
 import Model from './Model'
 import CameraManager from './CameraManager'
+import State from './State'
 /**
  *建立触摸与block之间关系
  *
@@ -50,6 +51,14 @@ export default class TouchBlock {
    */
   private DataStn: Data
   /**
+   *阻止弹窗
+   *
+   * @private
+   * @type {boolean}
+   * @memberof TouchBlock
+   */
+  private isWinOnce: boolean
+  /**
    *场景score组件label
    *
    * @private
@@ -57,6 +66,14 @@ export default class TouchBlock {
    * @memberof TouchBlock
    */
   private _score: cc.Label
+  /**
+   *最高分数
+   *
+   * @private
+   * @type {cc.Label}
+   * @memberof TouchBlock
+   */
+  private _bestScore: cc.Label
   /**
    *Creates an instance of TouchBlock.
    * @param {TouchFront} touchFront
@@ -68,13 +85,16 @@ export default class TouchBlock {
     touchFront: TouchFront,
     layout: Layout,
     score: cc.Label,
+    bestScore: cc.Label,
     scoreManager: ScoreManager
   ) {
     this.touchFront = touchFront
     this.layout = layout
     this.scoreUpdate = scoreManager
     this._score = score
+    this.isWinOnce = true
     this.DataStn = Data.getInstance()
+    this._bestScore = bestScore
   }
   /**
    *加载触摸事件
@@ -134,11 +154,18 @@ export default class TouchBlock {
    */
   private testResult = (): void => {
     this._score.string = String(this.DataStn.score)
+    if (State.getInstance().bestScore < Number(this._score.string)) {
+      State.getInstance().bestScore = Number(this._score.string)
+      this._bestScore.string = this._score.string
+    }
     if (this.DataStn.updateValue) {
       this.scoreUpdate.play(this.DataStn.updateValue)
     }
     if (this.DataStn.result) {
-      this.gameEnd()
+      if (this.isWinOnce) {
+        this.gameEnd()
+        this.isWinOnce = !this.isWinOnce
+      }
       this._score.string = String(this.DataStn.score - 1)
     } else if (this.DataStn.isFull) {
       if (!this.DataStn.hasTwice) {

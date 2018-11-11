@@ -2,18 +2,26 @@
  * @Author: AK-12
  * @Date: 2018-11-02 13:06:06
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-08 22:45:10
+ * @Last Modified time: 2018-11-11 18:54:12
  */
 export default interface ILayout {
   /**
    *初始化边界
    *
-   * @memberof Layout
+   * @param {{width: { start: number; end: number }
+   *       height: { start: number; end: number }
+   *     }} size
+   * @param {number} [scale] 边界缩放
+   * @returns {ILayout}
+   * @memberof ILayout
    */
-  initEdge(size: {
-    width: { start: number; end: number }
-    height: { start: number; end: number }
-  }): void
+  initEdge(
+    size: {
+      width: { start: number; end: number }
+      height: { start: number; end: number }
+    },
+    scale?: number
+  ): ILayout
   /**
    *根据矩阵绘制block组
    *
@@ -36,4 +44,11 @@ export default interface ILayout {
     callback: Function,
     speed?: number
   ): void
+  /**
+   *设置block缩放
+   *
+   * @param {number} scale
+   * @memberof ILayout
+   */
+  setBlockScale(scale: number): ILayout
 }
