@@ -58,9 +58,16 @@ export default class PlayLayer extends cc.Component {
   start() {
     // view
     this.backBtn.node.on('click', () => {
-      SceneMediator.getInstance().go(-1)
-      // awake the destroy handle
-      this.onDestroy()
+      SceneMediator.getInstance().go(
+        -1,
+        undefined,
+        undefined,
+        undefined,
+        () => {
+          // awake the destroy handle
+          this.onDestroy()
+        }
+      )
     })
     let layout = new Layout(this.layout.node)
     layout
