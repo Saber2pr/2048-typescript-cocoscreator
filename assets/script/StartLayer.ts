@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-09 17:11:30
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-12 15:06:07
+ * @Last Modified time: 2018-11-12 15:42:48
  */
 const { ccclass, property } = cc._decorator
 import SceneMediator from './SceneMediator'

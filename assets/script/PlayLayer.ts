@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-01 12:51:23
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-11 22:51:47
+ * @Last Modified time: 2018-11-12 15:46:24
  */
 const { ccclass, property } = cc._decorator
 import TouchBlock from './TouchBlock'
