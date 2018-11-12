@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-02 13:06:11
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-07 23:40:00
+ * @Last Modified time: 2018-11-12 22:44:19
  */
 /**
  *对象池管理
@@ -46,6 +46,14 @@ export default class Model {
    * @memberof Model
    */
   private _nodeList: cc.Node[]
+  /**
+   *layer引用
+   *
+   * @private
+   * @type {cc.Node}
+   * @memberof Model
+   */
+  private _playLayer: cc.Node
   /**
    *预制窗口缓存
    *
@@ -139,6 +147,24 @@ export default class Model {
     this._nodeList.push(node)
   }
   /**
+   *获取layer引用
+   *
+   * @returns {cc.Node}
+   * @memberof Model
+   */
+  public getLayerNode(): cc.Node {
+    return this._playLayer
+  }
+  /**
+   *保存layer引用
+   *
+   * @param {cc.Node} layer
+   * @memberof Model
+   */
+  public saveLayerNode(layer: cc.Node): void {
+    this._playLayer = layer
+  }
+  /**
    *回收全部节点到缓存
    *
    * @memberof Model
@@ -158,5 +184,6 @@ export default class Model {
     this._nodeList = []
     this._BlockPool.clear()
     this._layoutCache.clear()
+    this._playLayer.destroy()
   }
 }

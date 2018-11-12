@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-01 12:51:23
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-12 22:20:59
+ * @Last Modified time: 2018-11-12 22:52:35
  */
 const { ccclass, property } = cc._decorator
 import TouchBlock from './TouchBlock'
@@ -59,6 +59,8 @@ export default class PlayLayer extends cc.Component {
     // view
     this.backBtn.node.on('click', () => {
       SceneMediator.getInstance().go(-1)
+      // awake the destroy handle
+      this.onDestroy()
     })
     let layout = new Layout(this.layout.node)
     layout

@@ -2,10 +2,11 @@
  * @Author: AK-12
  * @Date: 2018-11-09 17:11:30
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-12 15:45:21
+ * @Last Modified time: 2018-11-12 22:43:49
  */
 const { ccclass, property } = cc._decorator
 import SceneMediator from './SceneMediator'
+import Model from './Model'
 
 @ccclass
 export default class ConnectLayer extends cc.Component {
@@ -24,6 +25,7 @@ export default class ConnectLayer extends cc.Component {
         let PlayLayer = cc.instantiate(this.PlayLayer)
         PlayLayer.setParent(this.PlayLayerAnchor)
         PlayLayer.setPosition(0, 0)
+        Model.getInstance().saveLayerNode(PlayLayer)
       })
     })
     this.beforeBtn.node.on('click', () => {
