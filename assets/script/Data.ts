@@ -317,44 +317,11 @@ export default class Data {
    * @memberof Data
    */
   private mergeRight = (arr: number[]): ArrAndDelta => {
-    let i, nextI, m
-    let len = arr.length
-    let delta = fillArray(0, arr.length)
-    for (i = len - 1; i >= 0; i--) {
-      nextI = -1
-      for (m = i - 1; m >= 0; m--) {
-        if (arr[m] !== 0) {
-          nextI = m
-          if (arr[m] === arr[i]) {
-            delta[m] = i - m
-          } else {
-            if (arr[i] === 0) {
-              delta[m] = i - m
-            } else {
-              delta[m] = i - m - 1
-            }
-          }
-          break
-        }
-      }
-      if (nextI !== -1) {
-        if (arr[i] === 0) {
-          arr[i] = arr[nextI]
-          arr[nextI] = 0
-          i -= 1
-        } else if (arr[i] === arr[nextI]) {
-          arr[i] = arr[i] * 2
-          this.updateTimes =
-            arr[i] < this.maxValue
-              ? this.updateTimes + arr[i]
-              : this.updateTimes + 1
-          arr[nextI] = 0
-        }
-      }
-    }
+    let arr_re = [...arr].reverse()
+    let arrAndDelta = this.mergeLeft(arr_re)
     return {
-      arr: arr,
-      delta: delta
+      arr: [...arrAndDelta.arr].reverse(),
+      delta: [...arrAndDelta.delta].reverse()
     }
   }
 }
