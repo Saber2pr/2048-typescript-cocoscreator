@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-10 12:36:21
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-12 15:32:28
+ * @Last Modified time: 2018-11-12 22:19:09
  */
 import CameraManager from './CameraManager'
 /**
@@ -109,5 +109,16 @@ export default class SceneMediator {
     CameraManager.getInstance().reload(1, () => {
       cc.Canvas.instance.node.scale = scale
     })
+  }
+  /**
+   *重置canvas的缩放
+   *
+   * @param {number} testValue
+   * @memberof SceneMediator
+   */
+  resetScale(testValue: number = 1) {
+    cc.Canvas.instance.node.scale !== testValue
+      ? cc.Canvas.instance.node.setScale(testValue)
+      : null
   }
 }
