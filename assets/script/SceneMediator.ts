@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-10 12:36:21
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-10 12:38:28
+ * @Last Modified time: 2018-11-12 15:32:28
  */
 import CameraManager from './CameraManager'
 /**
@@ -59,7 +59,8 @@ export default class SceneMediator {
   goto(
     scaleTospeed: number = 1,
     scale: number = 0.9,
-    movespeed: number = 1
+    movespeed: number = 1,
+    callback?: Function
   ): void {
     this.go(
       1,
@@ -71,7 +72,8 @@ export default class SceneMediator {
         )
       },
       scaleTospeed,
-      movespeed
+      movespeed,
+      callback
     )
   }
   /**
