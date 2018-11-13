@@ -2,12 +2,13 @@
  * @Author: AK-12
  * @Date: 2018-11-09 17:11:23
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-11 22:36:36
+ * @Last Modified time: 2018-11-13 16:05:21
  */
 const { ccclass, property } = cc._decorator
 import Data from './Data'
 import Model from './Model'
 import SceneMediator from './SceneMediator'
+import State from './State'
 
 @ccclass
 export default class EndLayer extends cc.Component {
@@ -41,7 +42,18 @@ export default class EndLayer extends cc.Component {
         .getComponent(cc.Label).string = 'restart'
       this.restartBtn.node.on('click', () => {
         Model.getInstance().returnPreLayout(this.node)
-        SceneMediator.getInstance().reload()
+        SceneMediator.getInstance().go(
+          -1,
+          undefined,
+          undefined,
+          undefined,
+          () => {
+            State.getInstance().isActionStop = true
+            Model.getInstance()
+              .getLayerNode()
+              .destroy()
+          }
+        )
       })
     }
   }

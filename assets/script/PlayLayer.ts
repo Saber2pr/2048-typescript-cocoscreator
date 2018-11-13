@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-01 12:51:23
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-13 12:40:50
+ * @Last Modified time: 2018-11-13 16:07:25
  */
 const { ccclass, property } = cc._decorator
 import TouchBlock from './TouchBlock'
@@ -48,7 +48,7 @@ export default class PlayLayer extends cc.Component {
       .initPreLayout(this.gameEnd)
     //init Data
     Data.getInstance()
-      .init(this.layoutType.size, 2048)
+      .init(this.layoutType.size, 8)
       .addRand(2)
     this.bestScore.string = String(State.getInstance().bestScore)
     // reset the canvas scale

@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-09 17:11:30
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-13 12:44:12
+ * @Last Modified time: 2018-11-13 16:06:04
  */
 const { ccclass, property } = cc._decorator
 import SceneMediator from './SceneMediator'
@@ -23,6 +23,7 @@ export default class ConnectLayer extends cc.Component {
   start() {
     this.nextBtn.node.on('click', () => {
       if (State.getInstance().isActionStop) {
+        cc.log(this.PlayLayerAnchor.children.length)
         SceneMediator.getInstance().go(
           1,
           () => {
