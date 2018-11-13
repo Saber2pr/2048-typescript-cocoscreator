@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-11 21:08:26
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-11 22:47:57
+ * @Last Modified time: 2018-11-13 12:39:03
  */
 
 /**
@@ -21,6 +21,7 @@ export default class State {
   }
   private _layoutTypeIndex: number = 0
   private _bestScore: number = 0
+  private _isActionStop: boolean = true
   /**
    *layout类型
    *
@@ -43,5 +44,17 @@ export default class State {
   }
   set bestScore(value: number) {
     this._bestScore = value
+  }
+  /**
+   *是否结束过渡
+   *
+   * @type {boolean}
+   * @memberof State
+   */
+  get isActionStop(): boolean {
+    return this._isActionStop
+  }
+  set isActionStop(isStop: boolean) {
+    this._isActionStop = isStop
   }
 }

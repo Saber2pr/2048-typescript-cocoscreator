@@ -2,11 +2,12 @@
  * @Author: AK-12
  * @Date: 2018-11-09 17:11:30
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-12 22:43:49
+ * @Last Modified time: 2018-11-13 12:44:12
  */
 const { ccclass, property } = cc._decorator
 import SceneMediator from './SceneMediator'
 import Model from './Model'
+import State from './State'
 
 @ccclass
 export default class ConnectLayer extends cc.Component {
@@ -21,12 +22,22 @@ export default class ConnectLayer extends cc.Component {
 
   start() {
     this.nextBtn.node.on('click', () => {
-      SceneMediator.getInstance().go(1, () => {
-        let PlayLayer = cc.instantiate(this.PlayLayer)
-        PlayLayer.setParent(this.PlayLayerAnchor)
-        PlayLayer.setPosition(0, 0)
-        Model.getInstance().saveLayerNode(PlayLayer)
-      })
+      if (State.getInstance().isActionStop) {
+        SceneMediator.getInstance().go(
+          1,
+          () => {
+            let PlayLayer = cc.instantiate(this.PlayLayer)
+            PlayLayer.setParent(this.PlayLayerAnchor)
+            PlayLayer.setPosition(0, 0)
+            Model.getInstance().saveLayerNode(PlayLayer)
+          },
+          undefined,
+          undefined,
+          () => {
+            State.getInstance().isActionStop = false
+          }
+        )
+      }
     })
     this.beforeBtn.node.on('click', () => {
       SceneMediator.getInstance().backto()

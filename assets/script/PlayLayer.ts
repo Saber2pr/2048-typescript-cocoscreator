@@ -2,7 +2,7 @@
  * @Author: AK-12
  * @Date: 2018-11-01 12:51:23
  * @Last Modified by: AK-12
- * @Last Modified time: 2018-11-12 22:52:35
+ * @Last Modified time: 2018-11-13 12:40:50
  */
 const { ccclass, property } = cc._decorator
 import TouchBlock from './TouchBlock'
@@ -64,8 +64,8 @@ export default class PlayLayer extends cc.Component {
         undefined,
         undefined,
         () => {
-          // awake the destroy handle
           this.onDestroy()
+          State.getInstance().isActionStop = true
         }
       )
     })
