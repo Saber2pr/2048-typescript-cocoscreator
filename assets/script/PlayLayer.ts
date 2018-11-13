@@ -48,7 +48,7 @@ export default class PlayLayer extends cc.Component {
       .initPreLayout(this.gameEnd)
     //init Data
     Data.getInstance()
-      .init(this.layoutType.size, 8)
+      .init(this.layoutType.size, 2048)
       .addRand(2)
     this.bestScore.string = String(State.getInstance().bestScore)
     // reset the canvas scale
